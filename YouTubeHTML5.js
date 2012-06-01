@@ -23,6 +23,9 @@ document.body.innerHTML
 video = document.createElement('video');
 video.controls = true;
 video.autoplay = true;
+video.addEventListener('dblclick', function () {
+    this.webkitRequestFullScreen();
+});
 
 function play(src) {
     var c = document.getElementById('watch-player'),
