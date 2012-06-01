@@ -1,0 +1,31 @@
+{
+    "manifest_version": 2,
+    "minimum_chrome_version": "19",
+    "content_security_policy": "default-src 'self'",
+    "web_accessible_resources": [
+        "16.png"
+    ],
+    "name": "HTML5 video player",
+    "description": "use the default HTML5 video player on YouTube",
+    "version": "0.1",
+    "icons": {
+        "128": "128.png",
+         "48": "48.png",
+         "16": "16.png"
+    },
+    "content_scripts": [{
+        "matches": [
+            "http://*.youtube.com/watch?*",
+            "https://*.youtube.com/watch?*"
+        ],
+        "js": [
+            "YouTubeHTML5.js"
+        ]
+    }],
+    "background": {
+        "scripts": [
+            "background.js"
+        ]
+    },
+    "options_page": "options.html"
+}

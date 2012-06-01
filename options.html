@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<meta charset="UTF-8" />
+<title>Options</title>
+<link rel="stylesheet" href="options.css">
+
+<h1>HTML5 Video Player - YouTube</h1>
+
+<h2>Automatically use HTML5 video player?</h2>
+<select id="swap">
+  <option value="0" selected>No, use YouTube video player</option>
+  <option value="1">Yes, use HTML5 video player</option>
+</select>
+
+<div id="fmts" hidden>
+  <h2>Default Format</h2>
+  <select id="itag">
+    <option value="18" selected>MP4</option>
+    <option value="22">MP4 HD</option>
+    <option value="43">WebM</option>
+    <option value="45">WebM HD</option>
+  </select>
+</div>
+
+<script src="options.js"></script>
