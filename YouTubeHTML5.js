@@ -8,13 +8,15 @@ var format, streamMap, video, btn;
 // support formats;
 
 format = {
-    18 : "MP4 360p",
-    22 : "MP4 720p (HD)",
-    37 : "MP4 1080p (HD)",
-    43 : "WebM 360p",
-    44 : "WebM 480p",
-    45 : "WebM 720p (HD)",
-    46 : "WebM 1080p (HD)",
+    label : {
+        18 : "MP4 360p",
+        22 : "MP4 720p (HD)",
+        37 : "MP4 1080p (HD)",
+        43 : "WebM 360p",
+        44 : "WebM 480p",
+        45 : "WebM 720p (HD)",
+        46 : "WebM 1080p (HD)"
+    },
     mp4 : {
         "360p" : 18,
         "720p" : 22,
@@ -89,7 +91,7 @@ Object.keys(streamMap).forEach(function (t) {
 
     var li, a, span;
 
-    if (format[t]) {
+    if (format.label[t]) {
 
         li = document.createElement('li');
 
@@ -103,7 +105,7 @@ Object.keys(streamMap).forEach(function (t) {
 
         span = document.createElement('span');
         span.setAttribute('class', 'yt-uix-button-menu-item');
-        span.textContent = format[t];
+        span.textContent = format.label[t];
 
         a.appendChild(span);
         li.appendChild(a);
