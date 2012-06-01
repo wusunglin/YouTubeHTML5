@@ -8,6 +8,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
         sendResponse({
             swap: localStorage.swap,
             itag: localStorage.itag,
+            auto: localStorage.auto
         });
     } else {
         sendResponse(null);

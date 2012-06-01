@@ -3,7 +3,30 @@
 
 "use strict";
 
-var streamMap, video, btn;
+var format, streamMap, video, btn;
+
+// support formats;
+
+format = {
+    18 : "MP4 360p",
+    22 : "MP4 720p (HD)",
+    37 : "MP4 1080p (HD)",
+    43 : "WebM 360p",
+    44 : "WebM 480p",
+    45 : "WebM 720p (HD)",
+    46 : "WebM 1080p (HD)",
+    mp4 : {
+        "360p" : 18,
+        "720p" : 22,
+        "1080p" : 37,
+    },
+    WebM : {
+        "360p" : 43,
+        "480p" : 44,
+        "720p" : 45,
+        "1080p" : 46
+    }
+};
 
 // parse Stream Map
 
@@ -32,15 +55,15 @@ function play(src) {
         w = window.getComputedStyle(c, null).getPropertyValue('width'),
         h = window.getComputedStyle(c, null).getPropertyValue('height');
 
-    if (!c.contains(video)) {
-        c.innerHTML = "";
-        c.appendChild(video);
-    }
-
     video.setAttribute('width', w);
     video.setAttribute('height', h);
     video.setAttribute('src', src);
     video.load(); // ?
+
+    if (!c.contains(video)) {
+        c.innerHTML = "";
+        c.appendChild(video);
+    }
 }
 
 // place button below video
@@ -62,35 +85,25 @@ btn.arrow.setAttribute('class', 'yt-uix-button-arrow');
 btn.list.setAttribute('style', 'display:none;');
 btn.list.setAttribute('class', 'yt-uix-button-menu');
 
-Object.keys(streamMap).forEach(function (tag) {
+Object.keys(streamMap).forEach(function (t) {
 
-    var format, li, a, span;
+    var li, a, span;
 
-    format = {
-        18 : 'MP4 360p',
-        22 : 'MP4 720p (HD)',
-        37 : 'MP4 1080p (HD)',
-        43 : 'WebM 360p',
-        44 : 'WebM 480p',
-        45 : 'WebM 720p (HD)',
-        46 : 'WebM 1080p (HD)',
-    };
-
-    if (format[tag]) {
+    if (format[t]) {
 
         li = document.createElement('li');
 
         a = document.createElement('a');
         a.setAttribute('style', 'text-decoration:none;');
-        a.setAttribute('href', streamMap[tag]);
+        a.setAttribute('href', streamMap[t]);
         a.onclick = function () {
-            play(streamMap[tag]);
+            play(streamMap[t]);
             return false;
         };
 
         span = document.createElement('span');
         span.setAttribute('class', 'yt-uix-button-menu-item');
-        span.textContent = format[tag];
+        span.textContent = format[t];
 
         a.appendChild(span);
         li.appendChild(a);
@@ -113,23 +126,38 @@ document.getElementById('watch-actions').appendChild(btn.button);
 chrome.extension.sendRequest("getLocalStorage", function (ls) {
     if (ls) {
         var swap = parseInt(ls.swap, 10),
-            itag = parseInt(ls.itag, 10);
+            itag = parseInt(ls.itag, 10),
+            auto = parseInt(ls.auto, 10);
         if (swap) {
-            if (itag === 22) { // MP4 HD availability check
-                if (!streamMap.hasOwnProperty(itag)) {
-                    itag = (streamMap.hasOwnProperty(18)) ? 18 : false;
-                }
+            if (itag === format.mp4["1080p"]) {
+                itag = (streamMap.hasOwnProperty(itag)) ? format.mp4["1080p"] : format.mp4["720p"];
             }
-            if (itag === 45) { // WebM HD availability check
-                if (!streamMap.hasOwnProperty(itag)) {
-                    itag = (streamMap.hasOwnProperty(43)) ? 43 : false;
-                }
+            if (itag === format.mp4["720p"]) {
+                itag = (streamMap.hasOwnProperty(itag)) ? format.mp4["720p"] : format.mp4["360p"];
+            }
+            if (itag === format.mp4["360p"]) {
+                itag = (streamMap.hasOwnProperty(itag)) ? format.mp4["360p"] : null;
+            }
+            if (itag === format.WebM["1080p"]) {
+                itag = (streamMap.hasOwnProperty(itag)) ? format.WebM["1080p"] : format.WebM["720p"];
+            }
+            if (itag === format.WebM["720p"]) {
+                itag = (streamMap.hasOwnProperty(itag)) ? format.WebM["720p"] : format.WebM["480p"];
+            }
+            if (itag === format.WebM["480p"]) {
+                itag = (streamMap.hasOwnProperty(itag)) ? format.WebM["480p"] : format.WebM["360p"];
+            }
+            if (itag === format.WebM["360p"]) {
+                itag = (streamMap.hasOwnProperty(itag)) ? format.WebM["360p"] : null;
             }
             if (itag) {
                 document.getElementById('watch-player').innerHTML = "";
                 document.getElementById('watch-player').appendChild(video);
                 play(streamMap[itag]);
             }
+        }
+        if (auto === 0) {
+            video.autoplay = false;
         }
     }
 });
