@@ -64,7 +64,7 @@ function play(src) {
     video.load(); // ?
 
     if (!c.contains(video)) {
-        // chrome bug? <video> continues to download  and play after being removed using innerHTML
+        // chrome bug? <video> continues to download and play after being removed using innerHTML
         y = c.querySelector('video.video-stream');
         if (y) {
             y.setAttribute('src', null);
