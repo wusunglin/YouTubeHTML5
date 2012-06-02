@@ -55,7 +55,8 @@ video.addEventListener('dblclick', function () {
 function play(src) {
     var c = document.getElementById('watch-player'),
         w = window.getComputedStyle(c, null).getPropertyValue('width'),
-        h = window.getComputedStyle(c, null).getPropertyValue('height');
+        h = window.getComputedStyle(c, null).getPropertyValue('height'),
+        y = null;
 
     video.setAttribute('width', w);
     video.setAttribute('height', h);
@@ -63,6 +64,12 @@ function play(src) {
     video.load(); // ?
 
     if (!c.contains(video)) {
+        // chrome bug? <video> continue to download  and play after being removed using innerHTML
+        y = c.querySelector('video.video-stream');
+        if (y) {
+            y.setAttribute('src', null);
+            y.load();
+        }
         c.innerHTML = "";
         c.appendChild(video);
     }
@@ -130,6 +137,9 @@ chrome.extension.sendRequest("getLocalStorage", function (ls) {
         var swap = parseInt(ls.swap, 10),
             itag = parseInt(ls.itag, 10),
             auto = parseInt(ls.auto, 10);
+        if (auto === 0) {
+            video.autoplay = false;
+        }
         if (swap) {
             if (itag === format.mp4["1080p"]) {
                 itag = (streamMap.hasOwnProperty(itag)) ? format.mp4["1080p"] : format.mp4["720p"];
@@ -153,13 +163,8 @@ chrome.extension.sendRequest("getLocalStorage", function (ls) {
                 itag = (streamMap.hasOwnProperty(itag)) ? format.WebM["360p"] : null;
             }
             if (itag) {
-                document.getElementById('watch-player').innerHTML = "";
-                document.getElementById('watch-player').appendChild(video);
                 play(streamMap[itag]);
             }
-        }
-        if (auto === 0) {
-            video.autoplay = false;
         }
     }
 });
