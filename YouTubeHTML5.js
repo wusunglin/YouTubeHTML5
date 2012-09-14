@@ -39,7 +39,8 @@ document.body.innerHTML
     .split(",")
     .forEach(function (s) {
         var tag = parseInt(s.match(/itag=(\d{0,2})/)[1], 10),
-            url = decodeURIComponent(s).split("\\u0026")[0].substring(4);
+            sig = s.match(/sig=(.*)\\u0026/)[1],
+            url = decodeURIComponent(s).split("\\u0026")[1].substring(4) + "&signature=" + sig;
         streamMap[tag] = url;
     });
 
