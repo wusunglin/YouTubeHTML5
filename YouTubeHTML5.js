@@ -1,33 +1,18 @@
 /*jslint browser: true, es5: true, indent: 4, regexp: true */
-/*global chrome, localStorage */
+/*global chrome */
 
 "use strict";
 
-var format, streamMap, video, btn;
-
-// support formats;
+var format, streamMap, video, button, wrap, icon, arrow, list;
 
 format = {
-    label : {
-        18 : "MP4 360p",
-        22 : "MP4 720p (HD)",
-        37 : "MP4 1080p (HD)",
-        43 : "WebM 360p",
-        44 : "WebM 480p",
-        45 : "WebM 720p (HD)",
-        46 : "WebM 1080p (HD)"
-    },
-    mp4 : {
-        "360p" : 18,
-        "720p" : 22,
-        "1080p" : 37,
-    },
-    WebM : {
-        "360p" : 43,
-        "480p" : 44,
-        "720p" : 45,
-        "1080p" : 46
-    }
+    18 : "MP4 360p",
+    22 : "MP4 720p (HD)",
+    37 : "MP4 1080p (HD)",
+    43 : "WebM 360p",
+    44 : "WebM 480p",
+    45 : "WebM 720p (HD)",
+    46 : "WebM 1080p (HD)"
 };
 
 // parse Stream Map
@@ -38,10 +23,12 @@ document.body.innerHTML
     .match(/\"url_encoded_fmt_stream_map\":\s*\"([^\"]+)\"/)[1]
     .split(",")
     .forEach(function (s) {
-        var tag = parseInt(s.match(/itag=(\d{0,2})/)[1], 10),
+        var tag = s.match(/itag=(\d{0,2})/)[1],
             sig = s.match(/sig=(.*)\\u0026/)[1],
             url = decodeURIComponent(s).split("\\u0026")[1].substring(4) + "&signature=" + sig;
-        streamMap[tag] = url;
+        if (format.hasOwnProperty(tag)) {
+            streamMap[tag] = url;
+        }
     });
 
 // HTML5 video element
@@ -51,6 +38,22 @@ video.controls = true;
 video.autoplay = true;
 video.addEventListener('dblclick', function () {
     this.webkitRequestFullScreen();
+});
+video.addEventListener('loadedmetadata', function () {
+    var m, s, t = location.hash.substring(1), offset = 0;
+    if (t.indexOf("t=") !== -1) {
+        m = t.match(/(\d*)m/);
+        if (Array.isArray(m)) {
+            m = parseInt(m[1], 10);
+            offset += (m * 60);
+        }
+        s = t.match(/(\d*)s/);
+        if (Array.isArray(s)) {
+            s = parseInt(s[1], 10);
+            offset += s;
+        }
+    }
+    this.currentTime = offset;
 });
 
 function play(src) {
@@ -78,58 +81,46 @@ function play(src) {
 
 // place button below video
 
-btn = {
-    button : document.createElement('button'),
-    wrap   : document.createElement('span'),
-    icon   : document.createElement('span'),
-    arrow  : document.createElement('img'),
-    list   : document.createElement('ol'),
-};
+icon = document.createElement("span");
+icon.setAttribute('class', 'yt-uix-button-content');
+icon.innerHTML = '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAZZJREFUeNqUUzGPAUEYfbuEkJCNi+z5AxoNrUrkinNK/oBSwg9RXVR6lYL6csmpLteiUigpHBeXRSHY5eYbO5vZ41y85O1kNt/75r1vdpXj8YhisWgC8OA2WO1226vamy/cDq7x2psZ430gEEAoFHIqFEUBOZSxXq+x2WyExtUA6XQa5XL56rGNRgPdbvesAbdjGMap22yG8XgMVVURDAZdLiaTycUIU3osl0u+GY1GqNfr/81g+qeDeDyOUqkEj+d0MZZlOapWqyVm4HLwKTvQdR35fP7isc1mE7JGNJjTY7/fo1ar8ekTaAaEw+GAarUK0zRlN/OzBoRcLodoNMoF8nX6/X4sFgvZDNeosh2Cz+dDLBZDJpNBOByGpmnIZrPcjYh4KYLzJa5WK75WKhV+fSKOPCNZo4iiQqFA/iJkNZFIIJlMIpVK8fz9fh+DwQDD4RC73Y50351O54603l+ZItvtFr1ej/MKnJmp0stnxg8a+rU/kPHdroUrggCLorHlgfGJ8dFu+Mr4wvjGrBuilrQ/AgwAO9GrsvF6bPwAAAAASUVORK5CYII=" />';
 
-btn.icon.setAttribute('class', 'yt-uix-button-content');
-btn.icon.innerHTML = '<img src="' + chrome.extension.getURL("16.png") + '" />';
+arrow = document.createElement("img");
+arrow.setAttribute('style', 'vertical-align:baseline;');
+arrow.setAttribute('class', 'yt-uix-button-arrow');
 
-btn.arrow.setAttribute('style', 'vertical-align:baseline;');
-btn.arrow.setAttribute('class', 'yt-uix-button-arrow');
+list = document.createElement("ol");
+list.setAttribute('style', 'display:none;');
+list.setAttribute('class', 'yt-uix-button-menu');
 
-btn.list.setAttribute('style', 'display:none;');
-btn.list.setAttribute('class', 'yt-uix-button-menu');
+Object.keys(streamMap).forEach(function (tag) {
+    var li, a, url = streamMap[tag];
 
-Object.keys(streamMap).forEach(function (t) {
+    a = document.createElement('a');
+    a.setAttribute('style', 'text-decoration:none;');
+    a.setAttribute('href', url);
+    a.innerHTML = '<span class="yt-uix-button-menu-item">' + format[tag] + '</span>';
+    a.onclick = function () {
+        play(url);
+        return false;
+    };
 
-    var li, a, span;
+    li = document.createElement('li');
+    li.appendChild(a);
 
-    if (format.label[t]) {
-
-        li = document.createElement('li');
-
-        a = document.createElement('a');
-        a.setAttribute('style', 'text-decoration:none;');
-        a.setAttribute('href', streamMap[t]);
-        a.onclick = function () {
-            play(streamMap[t]);
-            return false;
-        };
-
-        span = document.createElement('span');
-        span.setAttribute('class', 'yt-uix-button-menu-item');
-        span.textContent = format.label[t];
-
-        a.appendChild(span);
-        li.appendChild(a);
-        btn.list.appendChild(li);
-    }
+    list.appendChild(li);
 });
 
-btn.wrap.appendChild(btn.icon);
-btn.wrap.appendChild(btn.arrow);
-btn.wrap.appendChild(btn.list);
+wrap = document.createElement("span");
+wrap.appendChild(icon);
+wrap.appendChild(arrow);
+wrap.appendChild(list);
 
-btn.button.setAttribute('class', 'yt-uix-button yt-uix-button-default yt-uix-tooltip yt-uix-tooltip-reverse');
-btn.button.setAttribute('onclick', 'return false;');
-btn.button.appendChild(btn.wrap);
+button = document.createElement("button");
+button.setAttribute('class', 'yt-uix-button yt-uix-button-default');
+button.appendChild(wrap);
 
-document.getElementById('watch-actions').appendChild(btn.button);
+document.getElementById('watch-actions').appendChild(button);
 
 // automatically swap to HTML5 player?
 
@@ -141,28 +132,14 @@ chrome.extension.sendRequest("getLocalStorage", function (ls) {
         if (auto === 0) {
             video.autoplay = false;
         }
-        if (swap) {
-            if (itag === format.mp4["1080p"]) {
-                itag = (streamMap.hasOwnProperty(itag)) ? format.mp4["1080p"] : format.mp4["720p"];
-            }
-            if (itag === format.mp4["720p"]) {
-                itag = (streamMap.hasOwnProperty(itag)) ? format.mp4["720p"] : format.mp4["360p"];
-            }
-            if (itag === format.mp4["360p"]) {
-                itag = (streamMap.hasOwnProperty(itag)) ? format.mp4["360p"] : null;
-            }
-            if (itag === format.WebM["1080p"]) {
-                itag = (streamMap.hasOwnProperty(itag)) ? format.WebM["1080p"] : format.WebM["720p"];
-            }
-            if (itag === format.WebM["720p"]) {
-                itag = (streamMap.hasOwnProperty(itag)) ? format.WebM["720p"] : format.WebM["480p"];
-            }
-            if (itag === format.WebM["480p"]) {
-                itag = (streamMap.hasOwnProperty(itag)) ? format.WebM["480p"] : format.WebM["360p"];
-            }
-            if (itag === format.WebM["360p"]) {
-                itag = (streamMap.hasOwnProperty(itag)) ? format.WebM["360p"] : null;
-            }
+        if (swap && itag) {
+            if (itag === 37 && !streamMap.hasOwnProperty(itag)) { itag = 22;   }
+            if (itag === 22 && !streamMap.hasOwnProperty(itag)) { itag = 18;   }
+            if (itag === 18 && !streamMap.hasOwnProperty(itag)) { itag = null; }
+            if (itag === 46 && !streamMap.hasOwnProperty(itag)) { itag = 45;   }
+            if (itag === 45 && !streamMap.hasOwnProperty(itag)) { itag = 44;   }
+            if (itag === 44 && !streamMap.hasOwnProperty(itag)) { itag = 43;   }
+            if (itag === 43 && !streamMap.hasOwnProperty(itag)) { itag = null; }
             if (itag) {
                 play(streamMap[itag]);
             }

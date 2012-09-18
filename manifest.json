@@ -2,12 +2,9 @@
     "manifest_version": 2,
     "minimum_chrome_version": "19",
     "content_security_policy": "default-src 'self'",
-    "web_accessible_resources": [
-        "16.png"
-    ],
-    "name": "HTML5 video player",
-    "description": "use the default HTML5 video player on YouTube",
-    "version": "0.1.6",
+    "name": "HTML5 Video for YouTube™",
+    "description": "Use Chrome's default HTML5 video player on YouTube™",
+    "version": "0.2",
     "icons": {
         "128": "128.png",
          "48": "48.png",
