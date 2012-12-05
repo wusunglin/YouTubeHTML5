@@ -3,7 +3,7 @@
 
 "use strict";
 
-var format, streamMap, video, button, wrap, icon, arrow, list;
+var format, streamMap, video, wrap, button, list, container;
 
 format = {
     18 : "MP4 360p",
@@ -33,14 +33,20 @@ document.body.innerHTML
 
 // HTML5 video element
 
-video = document.createElement('video');
+video = document.createElement("video");
 video.controls = true;
 video.autoplay = true;
-video.addEventListener('dblclick', function () {
+
+video.addEventListener("dblclick", function () {
     this.webkitRequestFullScreen();
 });
-video.addEventListener('loadedmetadata', function () {
-    var m, s, t = location.hash.substring(1), offset = 0;
+
+video.addEventListener("loadedmetadata", function () {
+    var m = null,
+        s = null,
+        t = location.hash.substring(1),
+        offset = 0;
+
     if (t.indexOf("t=") !== -1) {
         m = t.match(/(\d*)m/);
         if (Array.isArray(m)) {
@@ -57,21 +63,21 @@ video.addEventListener('loadedmetadata', function () {
 });
 
 function play(src) {
-    var c = document.getElementById('watch-player'),
-        w = window.getComputedStyle(c, null).getPropertyValue('width'),
-        h = window.getComputedStyle(c, null).getPropertyValue('height'),
+    var c = document.getElementById("watch-player") || document.getElementById("watch7-player"),
+        w = window.getComputedStyle(c, null).getPropertyValue("width"),
+        h = window.getComputedStyle(c, null).getPropertyValue("height"),
         y = null;
 
-    video.setAttribute('width', w);
-    video.setAttribute('height', h);
-    video.setAttribute('src', src);
+    video.setAttribute("width", w);
+    video.setAttribute("height", h);
+    video.setAttribute("src", src);
     video.load(); // ?
 
     if (!c.contains(video)) {
         // chrome bug? <video> continues to download and play after being removed using innerHTML
-        y = c.querySelector('video.video-stream');
+        y = c.querySelector("video.video-stream");
         if (y) {
-            y.setAttribute('src', null);
+            y.setAttribute("src", null);
             y.load();
         }
         c.innerHTML = "";
@@ -79,52 +85,57 @@ function play(src) {
     }
 }
 
-// place button below video
+// create button and menu
 
-icon = document.createElement("span");
-icon.setAttribute('class', 'yt-uix-button-content');
-icon.innerHTML = '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAZZJREFUeNqUUzGPAUEYfbuEkJCNi+z5AxoNrUrkinNK/oBSwg9RXVR6lYL6csmpLteiUigpHBeXRSHY5eYbO5vZ41y85O1kNt/75r1vdpXj8YhisWgC8OA2WO1226vamy/cDq7x2psZ430gEEAoFHIqFEUBOZSxXq+x2WyExtUA6XQa5XL56rGNRgPdbvesAbdjGMap22yG8XgMVVURDAZdLiaTycUIU3osl0u+GY1GqNfr/81g+qeDeDyOUqkEj+d0MZZlOapWqyVm4HLwKTvQdR35fP7isc1mE7JGNJjTY7/fo1ar8ekTaAaEw+GAarUK0zRlN/OzBoRcLodoNMoF8nX6/X4sFgvZDNeosh2Cz+dDLBZDJpNBOByGpmnIZrPcjYh4KYLzJa5WK75WKhV+fSKOPCNZo4iiQqFA/iJkNZFIIJlMIpVK8fz9fh+DwQDD4RC73Y50351O54603l+ZItvtFr1ej/MKnJmp0stnxg8a+rU/kPHdroUrggCLorHlgfGJ8dFu+Mr4wvjGrBuilrQ/AgwAO9GrsvF6bPwAAAAASUVORK5CYII=" />';
+wrap = document.createElement("span");
 
-arrow = document.createElement("img");
-arrow.setAttribute('style', 'vertical-align:baseline;');
-arrow.setAttribute('class', 'yt-uix-button-arrow');
+button = document.createElement("button");
+button.setAttribute("class", "yt-uix-button yt-uix-button-default yt-uix-button-empty")
+button.setAttribute("role", "button");
+button.setAttribute("type", "button");
+button.innerHTML = '<span class="yt-uix-button-icon-wrapper">' +
+    '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAZZJREFUeNqUUzGPAUEYfbuEkJCNi+z5AxoNrUrkinNK/oBSwg9RXVR6lYL6csmpLteiUigpHBeXRSHY5eYbO5vZ41y85O1kNt/75r1vdpXj8YhisWgC8OA2WO1226vamy/cDq7x2psZ430gEEAoFHIqFEUBOZSxXq+x2WyExtUA6XQa5XL56rGNRgPdbvesAbdjGMap22yG8XgMVVURDAZdLiaTycUIU3osl0u+GY1GqNfr/81g+qeDeDyOUqkEj+d0MZZlOapWqyVm4HLwKTvQdR35fP7isc1mE7JGNJjTY7/fo1ar8ekTaAaEw+GAarUK0zRlN/OzBoRcLodoNMoF8nX6/X4sFgvZDNeosh2Cz+dDLBZDJpNBOByGpmnIZrPcjYh4KYLzJa5WK75WKhV+fSKOPCNZo4iiQqFA/iJkNZFIIJlMIpVK8fz9fh+DwQDD4RC73Y50351O54603l+ZItvtFr1ej/MKnJmp0stnxg8a+rU/kPHdroUrggCLorHlgfGJ8dFu+Mr4wvjGrBuilrQ/AgwAO9GrsvF6bPwAAAAASUVORK5CYII=">' +
+    '<span class="yt-uix-button-valign"></span>' +
+    '<span>';
 
 list = document.createElement("ol");
-list.setAttribute('style', 'display:none;');
-list.setAttribute('class', 'yt-uix-button-menu');
+list.setAttribute("style", "display:none;");
+list.setAttribute("class", "yt-uix-button-menu");
 
 Object.keys(streamMap).forEach(function (tag) {
-    var li, a, url = streamMap[tag];
+    var a = document.createElement("a"),
+        li = document.createElement("li"),
+        url = streamMap[tag];
 
-    a = document.createElement('a');
-    a.setAttribute('style', 'text-decoration:none;');
-    a.setAttribute('href', url);
+    a.setAttribute("style", "text-decoration:none;");
+    a.setAttribute("href", url);
     a.innerHTML = '<span class="yt-uix-button-menu-item">' + format[tag] + '</span>';
     a.onclick = function () {
         play(url);
         return false;
     };
 
-    li = document.createElement('li');
     li.appendChild(a);
-
     list.appendChild(li);
 });
 
-wrap = document.createElement("span");
-wrap.appendChild(icon);
-wrap.appendChild(arrow);
-wrap.appendChild(list);
+// place button below video
 
-button = document.createElement("button");
-button.setAttribute('class', 'yt-uix-button yt-uix-button-default');
-button.appendChild(wrap);
+container = document.getElementById("watch-actions") || document.getElementById("watch7-secondary-actions");
 
-document.getElementById('watch-actions').appendChild(button);
+if (container) {
+    button.appendChild(list);
+    wrap.appendChild(button);
+    if (container.id === "watch-actions") {
+        container.appendChild(wrap);
+    } else {
+        container.insertBefore(wrap, container.firstChild);
+    }
+}
 
 // automatically swap to HTML5 player?
 
-chrome.extension.sendRequest("getLocalStorage", function (ls) {
+chrome.extension.sendMessage("getLocalStorage", function (ls) {
     if (ls) {
         var swap = parseInt(ls.swap, 10),
             itag = parseInt(ls.itag, 10),
