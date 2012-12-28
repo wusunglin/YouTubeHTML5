@@ -20,14 +20,22 @@ format = {
 streamMap = {};
 
 document.body.innerHTML
-    .match(/\"url_encoded_fmt_stream_map\":\s*\"([^\"]+)\"/)[1]
+    .match(/\"url_encoded_fmt_stream_map\":\s*\"([^\"]+)\"/)[0]
     .split(",")
     .forEach(function (s) {
         var tag = s.match(/itag=(\d{0,2})/)[1],
-            sig = s.match(/sig=(.*)\\u0026/)[1],
-            url = decodeURIComponent(s).split("\\u0026")[1].substring(4) + "&signature=" + sig;
+            sig = s.match(/sig=([A-Z0-9]*\.[A-Z0-9]*)/)[1],
+            url = null;
+
+        decodeURIComponent(s).split("\\u0026").some(function (e) {
+            if(e.match(/^url=/)) {
+                url = e.substring(4);
+                return true;
+            }
+        });
+
         if (format.hasOwnProperty(tag)) {
-            streamMap[tag] = url;
+            streamMap[tag] = url + "&signature=" + sig;
         }
     });
 
