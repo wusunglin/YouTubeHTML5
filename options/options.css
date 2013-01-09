@@ -26,7 +26,7 @@ h2 {
 }
 
 select {
-    background-image: url("arrow.png"), -webkit-linear-gradient(#EDEDED, #EDEDED 38%, #DEDEDE);
+    background-image: url("../images/arrow.png"), -webkit-linear-gradient(#EDEDED, #EDEDED 38%, #DEDEDE);
     background-position: right center;
     background-repeat: no-repeat;
     border: 1px solid rgba(0, 0, 0, 0.25);
