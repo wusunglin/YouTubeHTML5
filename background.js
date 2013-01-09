@@ -3,7 +3,7 @@
 
 "use strict";
 
-chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
+chrome.extension.onMessage.addListener(function (request, sender, sendResponse) {
     if (request === "getLocalStorage") {
         sendResponse({
             swap: localStorage.swap,

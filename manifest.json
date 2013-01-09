@@ -4,12 +4,16 @@
     "content_security_policy": "default-src 'self'",
     "name": "HTML5 Video for YouTube™",
     "description": "Use Chrome's default HTML5 video player on YouTube™",
-    "version": "0.2.3",
+    "version": "0.2.4",
     "icons": {
-        "128": "128.png",
-         "48": "48.png",
-         "16": "16.png"
+        "128": "images/128.png",
+         "48": "images/48.png",
+         "16": "images/16.png"
     },
+    "web_accessible_resources": [
+        "images/icon.png",
+        "images/resize.png"
+    ],
     "content_scripts": [{
         "matches": [
             "http://*.youtube.com/watch?*",
@@ -25,5 +29,5 @@
         ],
         "persistent": false
     },
-    "options_page": "options.html"
+    "options_page": "options/options.html"
 }

@@ -3,17 +3,25 @@
 
 "use strict";
 
-var format, streamMap, video, wrap, button, list, container;
+var format, streamMap, video, wrapper, button, list, resize, popout, ytWatchContainer, ytWatchPlayer, ytWatchActions;
+
+ytWatchContainer = document.getElementById("watch-container") || document.getElementById("watch7-container");
+ytWatchPlayer = document.getElementById("watch-player") || document.getElementById("watch7-player");
+ytWatchActions = document.getElementById("watch-actions") || document.getElementById("watch7-secondary-actions");
+
+
+// supported formats
 
 format = {
-    18 : "MP4 360p",
-    22 : "MP4 720p (HD)",
-    37 : "MP4 1080p (HD)",
-    43 : "WebM 360p",
-    44 : "WebM 480p",
-    45 : "WebM 720p (HD)",
-    46 : "WebM 1080p (HD)"
+    18: "MP4 360p",
+    22: "MP4 720p (HD)",
+    37: "MP4 1080p (HD)",
+    43: "WebM 360p",
+    44: "WebM 480p",
+    45: "WebM 720p (HD)",
+    46: "WebM 1080p (HD)"
 };
+
 
 // parse Stream Map
 
@@ -24,20 +32,15 @@ document.body.innerHTML
     .split(",")
     .forEach(function (s) {
         var tag = s.match(/itag=(\d{0,2})/)[1],
-            sig = s.match(/sig=([A-Z0-9]*\.[A-Z0-9]*)/)[1],
-            url = null;
-
+            sig = s.match(/sig=([A-Z0-9]*\.[A-Z0-9]*)/)[1];
         decodeURIComponent(s).split("\\u0026").some(function (e) {
-            if(e.match(/^url=/)) {
-                url = e.substring(4);
+            if (e.match(/^url=/) && format.hasOwnProperty(tag)) {
+                streamMap[tag] = e.substring(4) + "&signature=" + sig;
                 return true;
             }
         });
-
-        if (format.hasOwnProperty(tag)) {
-            streamMap[tag] = url + "&signature=" + sig;
-        }
     });
+
 
 // HTML5 video element
 
@@ -70,76 +73,91 @@ video.addEventListener("loadedmetadata", function () {
     this.currentTime = offset;
 });
 
-function play(src) {
-    var c = document.getElementById("watch-player") || document.getElementById("watch7-player"),
-        w = window.getComputedStyle(c, null).getPropertyValue("width"),
-        h = window.getComputedStyle(c, null).getPropertyValue("height"),
-        y = null;
-
+function resizeVideo() {
+    var w = window.getComputedStyle(ytWatchPlayer, null).getPropertyValue("width"),
+        h = window.getComputedStyle(ytWatchPlayer, null).getPropertyValue("height");
     video.setAttribute("width", w);
     video.setAttribute("height", h);
+}
+
+function playVideo(src) {
+    resizeVideo();
     video.setAttribute("src", src);
     video.load(); // ?
-
-    if (!c.contains(video)) {
+    if (!ytWatchPlayer.contains(video)) {
         // chrome bug? <video> continues to download and play after being removed using innerHTML
-        y = c.querySelector("video.video-stream");
-        if (y) {
-            y.setAttribute("src", null);
-            y.load();
+        var v = ytWatchPlayer.querySelector("video.video-stream");
+        if (v) {
+            v.setAttribute("src", null);
+            v.load();
         }
-        c.innerHTML = "";
-        c.appendChild(video);
+        ytWatchPlayer.innerHTML = "";
+        ytWatchPlayer.appendChild(video);
     }
 }
 
+
 // create button and menu
 
-wrap = document.createElement("span");
+function createMenuItem(text, url, icon, onclick) {
+    var l = document.createElement("li"),
+        a = document.createElement("a");
+    if (url) {
+        a.setAttribute("href", url);
+        a.setAttribute("style", "text-decoration:none;");
+        a.innerHTML = '<span class="yt-uix-button-menu-item">' + text + '</span>';
+        a.addEventListener("click", function (e) {
+            e.preventDefault();
+            playVideo(url);
+        });
+        l.appendChild(a);
+    } else {
+        l.innerHTML = '<span class="yt-uix-button-menu-item" style="background-image: url(' + chrome.extension.getURL(icon) + '); background-position: 4px center; background-repeat: no-repeat;">' + text + '</span>';
+        l.addEventListener("click", onclick);
+    }
+    return l;
+}
+
+wrapper = document.createElement("span");
 
 button = document.createElement("button");
-button.setAttribute("class", "yt-uix-button yt-uix-button-default yt-uix-button-empty")
+button.setAttribute("class", "yt-uix-button yt-uix-button-default yt-uix-button-empty");
 button.setAttribute("role", "button");
 button.setAttribute("type", "button");
-button.innerHTML = '<span class="yt-uix-button-icon-wrapper">' +
-    '<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAZZJREFUeNqUUzGPAUEYfbuEkJCNi+z5AxoNrUrkinNK/oBSwg9RXVR6lYL6csmpLteiUigpHBeXRSHY5eYbO5vZ41y85O1kNt/75r1vdpXj8YhisWgC8OA2WO1226vamy/cDq7x2psZ430gEEAoFHIqFEUBOZSxXq+x2WyExtUA6XQa5XL56rGNRgPdbvesAbdjGMap22yG8XgMVVURDAZdLiaTycUIU3osl0u+GY1GqNfr/81g+qeDeDyOUqkEj+d0MZZlOapWqyVm4HLwKTvQdR35fP7isc1mE7JGNJjTY7/fo1ar8ekTaAaEw+GAarUK0zRlN/OzBoRcLodoNMoF8nX6/X4sFgvZDNeosh2Cz+dDLBZDJpNBOByGpmnIZrPcjYh4KYLzJa5WK75WKhV+fSKOPCNZo4iiQqFA/iJkNZFIIJlMIpVK8fz9fh+DwQDD4RC73Y50351O54603l+ZItvtFr1ej/MKnJmp0stnxg8a+rU/kPHdroUrggCLorHlgfGJ8dFu+Mr4wvjGrBuilrQ/AgwAO9GrsvF6bPwAAAAASUVORK5CYII=">' +
-    '<span class="yt-uix-button-valign"></span>' +
-    '<span>';
+button.innerHTML = '<span class="yt-uix-button-icon-wrapper"><img src="' + chrome.extension.getURL("images/icon.png") + '"><span class="yt-uix-button-valign"></span><span>';
 
 list = document.createElement("ol");
 list.setAttribute("style", "display:none;");
 list.setAttribute("class", "yt-uix-button-menu");
 
+resize = createMenuItem("Resize video", null, "images/resize.png", function () {
+    ytWatchContainer.classList.toggle("watch-wide");
+    ytWatchContainer.classList.toggle("watch-medium");
+    resizeVideo();
+});
+
+// popout = createMenuItem("Popout player", null, "images/popout.png", function () {
+//     var w = window.getComputedStyle(ytWatchPlayer, null).getPropertyValue("width"),
+//         h = window.getComputedStyle(ytWatchPlayer, null).getPropertyValue("height");
+//     window.open());
+// });
+// list.appendChild(popout);
+
 Object.keys(streamMap).forEach(function (tag) {
-    var a = document.createElement("a"),
-        li = document.createElement("li"),
-        url = streamMap[tag];
-
-    a.setAttribute("style", "text-decoration:none;");
-    a.setAttribute("href", url);
-    a.innerHTML = '<span class="yt-uix-button-menu-item">' + format[tag] + '</span>';
-    a.onclick = function () {
-        play(url);
-        return false;
-    };
-
-    li.appendChild(a);
+    var li = createMenuItem(format[tag], streamMap[tag], "resize");
     list.appendChild(li);
 });
 
-// place button below video
+list.appendChild(resize);
+button.appendChild(list);
+wrapper.appendChild(button);
 
-container = document.getElementById("watch-actions") || document.getElementById("watch7-secondary-actions");
-
-if (container) {
-    button.appendChild(list);
-    wrap.appendChild(button);
-    if (container.id === "watch-actions") {
-        container.appendChild(wrap);
-    } else {
-        container.insertBefore(wrap, container.firstChild);
-    }
+if (ytWatchActions.id === "watch-actions") {
+    ytWatchActions.appendChild(wrapper);
+} else {
+    ytWatchActions.insertBefore(wrapper, ytWatchActions.firstChild);
 }
+
 
 // automatically swap to HTML5 player?
 
@@ -160,7 +178,7 @@ chrome.extension.sendMessage("getLocalStorage", function (ls) {
             if (itag === 44 && !streamMap.hasOwnProperty(itag)) { itag = 43;   }
             if (itag === 43 && !streamMap.hasOwnProperty(itag)) { itag = null; }
             if (itag) {
-                play(streamMap[itag]);
+                playVideo(streamMap[itag]);
             }
         }
     }

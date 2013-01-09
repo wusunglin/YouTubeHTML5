@@ -3,26 +3,26 @@
 
 "use strict";
 
-var swap = document.getElementById('swap'),
-    itag = document.getElementById('itag'),
-    auto = document.getElementById('auto'),
-    fmts = document.getElementById('fmts');
+var swap = document.getElementById("swap"),
+    itag = document.getElementById("itag"),
+    auto = document.getElementById("auto"),
+    fmts = document.getElementById("fmts");
 
-swap.addEventListener('change', function () {
+swap.addEventListener("change", function () {
     var s = this.options[this.selectedIndex].value;
     if (parseInt(s, 10)) {
-        fmts.removeAttribute('hidden');
+        fmts.removeAttribute("hidden");
     } else {
-        fmts.setAttribute('hidden');
+        fmts.setAttribute("hidden");
     }
     localStorage.swap = s;
 });
 
-itag.addEventListener('change', function () {
+itag.addEventListener("change", function () {
     localStorage.itag = this.options[this.selectedIndex].value;
 });
 
-auto.addEventListener('change', function () {
+auto.addEventListener("change", function () {
     localStorage.auto = this.options[this.selectedIndex].value;
 });
 
@@ -45,5 +45,5 @@ init("itag", itag);
 init("auto", auto);
 
 if (parseInt(localStorage.swap, 10)) {
-    fmts.removeAttribute('hidden');
+    fmts.removeAttribute("hidden");
 }
