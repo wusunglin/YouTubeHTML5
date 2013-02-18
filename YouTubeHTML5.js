@@ -3,7 +3,7 @@
 
 "use strict";
 
-var format, streamMap, video, wrapper, button, list, resize, popout, ytWatchContainer, ytWatchPlayer, ytWatchActions;
+var format, streamMap, video, wrapper, button, list, resize_s, resize_m, resize_l, popout, ytWatchContainer, ytWatchPlayer, ytWatchActions;
 
 ytWatchContainer = document.getElementById("watch-container") || document.getElementById("watch7-container");
 ytWatchPlayer = document.getElementById("watch-player") || document.getElementById("watch7-player");
@@ -47,6 +47,8 @@ document.body.innerHTML
 video = document.createElement("video");
 video.controls = true;
 video.autoplay = true;
+video.setAttribute("width", "100%");
+video.setAttribute("height", "100%");
 
 video.addEventListener("dblclick", function () {
     this.webkitRequestFullScreen();
@@ -73,15 +75,7 @@ video.addEventListener("loadedmetadata", function () {
     this.currentTime = offset;
 });
 
-function resizeVideo() {
-    var w = window.getComputedStyle(ytWatchPlayer, null).getPropertyValue("width"),
-        h = window.getComputedStyle(ytWatchPlayer, null).getPropertyValue("height");
-    video.setAttribute("width", w);
-    video.setAttribute("height", h);
-}
-
 function playVideo(src) {
-    resizeVideo();
     video.setAttribute("src", src);
     video.load(); // ?
     if (!ytWatchPlayer.contains(video)) {
@@ -118,6 +112,19 @@ function createMenuItem(text, url, icon, onclick) {
     return l;
 }
 
+function resizeContainer(size) {
+    ytWatchContainer.classList.remove("watch-wide");
+    ytWatchContainer.classList.remove("watch-small");
+    ytWatchContainer.classList.remove("watch-medium");
+    ytWatchContainer.classList.remove("watch-large");
+    if (!size || size === "small") {
+        ytWatchContainer.classList.add("watch-small");
+    } else {
+        ytWatchContainer.classList.add("watch-wide");
+        ytWatchContainer.classList.add("watch-" + size);
+    }
+}
+
 wrapper = document.createElement("span");
 
 button = document.createElement("button");
@@ -130,10 +137,15 @@ list = document.createElement("ol");
 list.setAttribute("style", "display:none;");
 list.setAttribute("class", "yt-uix-button-menu");
 
-resize = createMenuItem("Resize video", null, "images/resize.png", function () {
-    ytWatchContainer.classList.toggle("watch-wide");
-    ytWatchContainer.classList.toggle("watch-medium");
-    resizeVideo();
+resize_s = createMenuItem("Small", null, "images/resize_s.png", function () {
+    resizeContainer("small");
+});
+
+resize_m = createMenuItem("Medium", null, "images/resize_m.png", function () {
+    resizeContainer("medium");
+});
+resize_l = createMenuItem("Large", null, "images/resize_l.png", function () {
+    resizeContainer("large");
 });
 
 // popout = createMenuItem("Popout player", null, "images/popout.png", function () {
@@ -148,7 +160,9 @@ Object.keys(streamMap).forEach(function (tag) {
     list.appendChild(li);
 });
 
-list.appendChild(resize);
+list.appendChild(resize_s);
+list.appendChild(resize_m);
+list.appendChild(resize_l);
 button.appendChild(list);
 wrapper.appendChild(button);
 
