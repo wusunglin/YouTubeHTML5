@@ -6,7 +6,7 @@
 var format, streamMap, video, wrapper, button, list, resize_s, resize_m, resize_l, popout, ytWatchContainer, ytWatchPlayer, ytWatchActions;
 
 ytWatchContainer = document.getElementById("watch-container") || document.getElementById("watch7-container");
-ytWatchPlayer = document.getElementById("watch-player") || document.getElementById("watch7-player");
+ytWatchPlayer = document.getElementById("player-api") || document.getElementById("watch-player") || document.getElementById("watch7-player");
 ytWatchActions = document.getElementById("watch-actions") || document.getElementById("watch7-secondary-actions");
 
 
