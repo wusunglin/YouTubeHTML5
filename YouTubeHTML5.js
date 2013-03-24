@@ -179,7 +179,8 @@ chrome.extension.sendMessage("getLocalStorage", function (ls) {
     if (ls) {
         var swap = parseInt(ls.swap, 10),
             itag = parseInt(ls.itag, 10),
-            auto = parseInt(ls.auto, 10);
+            auto = parseInt(ls.auto, 10),
+            keys = parseInt(ls.keys, 10);
         if (auto === 0) {
             video.autoplay = false;
         }
@@ -194,6 +195,19 @@ chrome.extension.sendMessage("getLocalStorage", function (ls) {
             if (itag) {
                 playVideo(streamMap[itag]);
             }
+        }
+        if (keys) {
+            document.addEventListener("keydown", function (e) {
+                e.preventDefault();
+                var SPACEBAR = 32;
+                if (document.contains(video) && e.keyCode === SPACEBAR) {
+                    if (video.paused || video.ended) {
+                        video.play();
+                    } else {
+                        video.pause();
+                    }
+                }
+            });
         }
     }
 });

@@ -8,7 +8,8 @@ chrome.extension.onMessage.addListener(function (request, sender, sendResponse) 
         sendResponse({
             swap: localStorage.swap,
             itag: localStorage.itag,
-            auto: localStorage.auto
+            auto: localStorage.auto,
+            keys: localStorage.keys
         });
     } else {
         sendResponse(null);

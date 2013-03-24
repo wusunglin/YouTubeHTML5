@@ -4,7 +4,7 @@
     "content_security_policy": "default-src 'self'",
     "name": "HTML5 Video for YouTube™",
     "description": "Use Chrome's default HTML5 video player on YouTube™",
-    "version": "0.2.7",
+    "version": "0.2.8",
     "icons": {
         "128": "images/128.png",
          "48": "images/48.png",

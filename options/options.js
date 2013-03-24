@@ -6,6 +6,7 @@
 var swap = document.getElementById("swap"),
     itag = document.getElementById("itag"),
     auto = document.getElementById("auto"),
+    keys = document.getElementById("keys"),
     fmts = document.getElementById("fmts");
 
 swap.addEventListener("change", function () {
@@ -26,6 +27,10 @@ auto.addEventListener("change", function () {
     localStorage.auto = this.options[this.selectedIndex].value;
 });
 
+keys.addEventListener("change", function () {
+    localStorage.keys = this.options[this.selectedIndex].value;
+});
+
 function init(name, el) {
     var i = 0,
         s = localStorage[name];
@@ -43,6 +48,7 @@ function init(name, el) {
 init("swap", swap);
 init("itag", itag);
 init("auto", auto);
+init("keys", keys);
 
 if (parseInt(localStorage.swap, 10)) {
     fmts.removeAttribute("hidden");
