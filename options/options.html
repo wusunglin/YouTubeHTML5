@@ -5,34 +5,44 @@
 
 <h1>HTML5 Video for YouTube™</h1>
 
-<h2>Automatically use HTML5 video player?</h2>
-<select id="swap">
-  <option value="0" selected>No, use YouTube video player</option>
-  <option value="1">Yes, use HTML5 video player</option>
-</select>
-
-<div id="fmts" hidden>
-  <h2>Default Format</h2>
-  <select id="itag">
-    <option value="18" selected>MP4 360p</option>
-    <option value="22">MP4 720p (HD)</option>
-    <option value="37">MP4 1080p (HD)</option>
-    <option value="43">WebM 360P</option>
-    <option value="44">WebM 480P</option>
-    <option value="45">WebM 720P (HD)</option>
-    <option value="46">WebM 1080p (HD)</option>
-  </select>
-  <h2>Autoplay</h2>
-  <select id="auto">
-    <option value="1" selected>Yes</option>
-    <option value="0">No</option>
-  </select>
+<div>
+  <input id="enabled" type="checkbox" />
+  <label for="enabled">Automatically use HTML5 video</label>
 </div>
 
-<h2>Pause video using spacebar?</h2>
-<select id="keys">
-  <option value="1">Yes</option>
-  <option value="0" selected>No</option>
-</select>
+<div>
+  <input id="autoplay" type="checkbox" checked />
+  <label for="autoplay">Autoplay</label>
+</div>
+
+<div>
+  <input id="embiggen" type="checkbox" />
+  <label for="embiggen">Embiggen player</label>
+</div>
+
+<div>
+  <input id="space" type="checkbox" />
+  <label for="space">Play/Pause using [Shift]+[Space]</label>
+</div>
+
+<h2>Preferred codec</h2>
+
+<div>
+  <input id="mp4" type="radio" name="codec" checked />
+  <label for="mp4">MP4</label>
+  <input id="webm" type="radio" name="codec" />
+  <label for="webm">WebM</label>
+</div>
+
+<h2>Preferred quality</h2>
+
+<div>
+  <input id="f360" type="radio" name="format" checked />
+  <label for="f360">360p</label>
+  <input id="f720" type="radio" name="format" />
+  <label for="f720">720p</label>
+  <input id="f1080" type="radio" name="format" />
+  <label for="f1080">1080p</label>
+</div>
 
 <script src="options.js"></script>

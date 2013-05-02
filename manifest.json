@@ -1,35 +1,30 @@
 {
     "manifest_version": 2,
-    "minimum_chrome_version": "22",
+    "minimum_chrome_version": "26",
     "content_security_policy": "default-src 'self'",
-    "name": "HTML5 Video for YouTube™",
-    "description": "Use Chrome's default HTML5 video player on YouTube™",
-    "version": "0.2.8",
+    "default_locale": "en",
+    "name": "__MSG_ext_name__",
+    "description": "__MSG_ext_description__",
+    "version": "0.3",
     "icons": {
-        "128": "images/128.png",
-         "48": "images/48.png",
-         "16": "images/16.png"
+        "128": "128.png",
+         "48": "48.png",
+         "16": "16.png"
     },
-    "web_accessible_resources": [
-        "images/icon.png",
-        "images/resize_s.png",
-        "images/resize_m.png",
-        "images/resize_l.png"
+    "permissions": [
+        "storage"
     ],
     "content_scripts": [{
         "matches": [
-            "http://*.youtube.com/watch?*",
-            "https://*.youtube.com/watch?*"
+            "*://*.youtube.com/watch*"
+        ],
+        "css": [
+            "YouTubeHTML5.css"
         ],
         "js": [
             "YouTubeHTML5.js"
-        ]
-    }],
-    "background": {
-        "scripts": [
-            "background.js"
         ],
-        "persistent": false
-    },
+        "run_at": "document_end"
+    }],
     "options_page": "options/options.html"
 }

@@ -1,0 +1,33 @@
+{
+	"ext_name": {
+		"message": "HTML5 Video for YouTube\u2122"
+	},
+	"ext_description": {
+		"message": "Use Chrome's default HTML5 video player on YouTube\u2122"
+	},
+	//
+	"enable": {
+		"message": "Enable"
+	},
+	"disable": {
+		"message": "Disable"
+	},
+	"quality": {
+		"message": "Quality"
+	},
+	"speed": {
+		"message": "Speed"
+	},
+	"embiggen": {
+		"message": "Embiggen"
+	},
+	"shrink": {
+		"message": "Shrink"
+	},
+	"download": {
+		"message": "Download"
+	},
+	"reload": {
+		"message": "Reload"
+	}
+}

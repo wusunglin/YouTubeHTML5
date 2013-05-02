@@ -1,55 +1,99 @@
-/*jslint browser: true, es5: true, indent: 4, plusplus: true*/
-/*global localStorage */
+/*jslint browser: true, es5: true, indent: 4*/
+/*global chrome */
 
 "use strict";
 
-var swap = document.getElementById("swap"),
-    itag = document.getElementById("itag"),
-    auto = document.getElementById("auto"),
-    keys = document.getElementById("keys"),
-    fmts = document.getElementById("fmts");
+var enabled  = document.getElementById("enabled"),
+    autoplay = document.getElementById("autoplay"),
+    embiggen = document.getElementById("embiggen"),
+    space    = document.getElementById("space"),
+    mp4      = document.getElementById("mp4"),
+    webm     = document.getElementById("webm"),
+    f360     = document.getElementById("f360"),
+    f720     = document.getElementById("f720"),
+    f1080    = document.getElementById("f1080");
 
-swap.addEventListener("change", function () {
-    var s = this.options[this.selectedIndex].value;
-    if (parseInt(s, 10)) {
-        fmts.removeAttribute("hidden");
+enabled.addEventListener("change", function () {
+    chrome.storage.local.set({"enabled": this.checked});
+});
+
+autoplay.addEventListener("change", function () {
+    chrome.storage.local.set({"autoplay": this.checked});
+});
+
+embiggen.addEventListener("change", function () {
+    chrome.storage.local.set({"embiggen": this.checked});
+});
+
+space.addEventListener("change", function () {
+    chrome.storage.local.set({"space": this.checked});
+});
+
+function format() {
+    var f = null;
+    if (mp4.checked) {
+        if (f360.checked) { f = "18"; }
+        if (f720.checked) { f = "22"; }
+        if (f1080.checked) { f = "37"; }
     } else {
-        fmts.setAttribute("hidden");
+        if (f360.checked) { f = "43"; }
+        if (f720.checked) { f = "45"; }
+        if (f1080.checked) { f = "46"; }
     }
-    localStorage.swap = s;
-});
-
-itag.addEventListener("change", function () {
-    localStorage.itag = this.options[this.selectedIndex].value;
-});
-
-auto.addEventListener("change", function () {
-    localStorage.auto = this.options[this.selectedIndex].value;
-});
-
-keys.addEventListener("change", function () {
-    localStorage.keys = this.options[this.selectedIndex].value;
-});
-
-function init(name, el) {
-    var i = 0,
-        s = localStorage[name];
-    if (!s) {
-        localStorage[name] = el.options[el.selectedIndex].value;
-    } else {
-        for (i = 0; i < el.options.length; ++i) {
-            if (el.options[i].value === s) {
-                el.selectedIndex = i;
-            }
-        }
-    }
+    chrome.storage.local.set({"format": f});
 }
 
-init("swap", swap);
-init("itag", itag);
-init("auto", auto);
-init("keys", keys);
+mp4.addEventListener("change", format);
+webm.addEventListener("change", format);
+f360.addEventListener("change", format);
+f720.addEventListener("change", format);
+f1080.addEventListener("change", format);
 
-if (parseInt(localStorage.swap, 10)) {
-    fmts.removeAttribute("hidden");
-}
+// init
+
+chrome.storage.local.get(null, function (options) {
+
+    if (typeof options.enabled === "boolean") {
+        enabled.checked = options.enabled;
+    }
+
+    if (typeof options.autoplay === "boolean") {
+        autoplay.checked = options.autoplay;
+    }
+
+    if (typeof options.embiggen === "boolean") {
+        embiggen.checked = options.embiggen;
+    }
+
+    if (typeof options.space === "boolean") {
+        space.checked = options.space;
+    }
+
+    switch (options.format) {
+    case "18":
+        mp4.checked = true;
+        f360.checked = true;
+        break;
+    case "22":
+        mp4.checked = true;
+        f720.checked = true;
+        break;
+    case "37":
+        mp4.checked = true;
+        f1080.checked = true;
+        break;
+    case "43":
+        webm.checked = true;
+        f360.checked = true;
+        break;
+    case "45":
+        webm.checked = true;
+        f720.checked = true;
+        break;
+    case "46":
+        webm.checked = true;
+        f1080.checked = true;
+        break;
+    }
+
+});
