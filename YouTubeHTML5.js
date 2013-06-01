@@ -439,6 +439,24 @@ chrome.storage.local.get(null, function(options) {
     }
 
     if (options.enabled === true) {
+
+        // this should stop YouTube's html5 video player loading in the background
+        var observer = new MutationObserver(function(mutations) {
+            mutations.some(function(mutation) {
+                var v = youtube.flash.querySelector("video");
+                if (v) {
+                    v.addEventListener("play", function () {
+                        if (document.contains(video)) {
+                            this.pause();
+                        }
+                    })
+                    observer.disconnect();
+                    return true;
+                }
+            });
+        });
+        observer.observe(youtube.flash, {subtree: true, childList: true});
+
         togglePlayer();
     }
 
