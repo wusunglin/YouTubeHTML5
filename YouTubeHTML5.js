@@ -1,5 +1,5 @@
 /*jslint browser: true, es5: true, indent: 4, regexp: true */
-/*global chrome */
+/*global chrome, MutationObserver */
 
 "use strict";
 
@@ -213,6 +213,18 @@ video.addEventListener("volumechange", function () {
     } else {
         state.muted = false;
         state.volume = this.volume;
+    }
+});
+
+video.addEventListener("ended", function () {
+    if (!video.loop) {
+        var next = document.getElementById("watch7-playlist-bar-next-button");
+        if (next) {
+            var href = next.href;
+            if (href) {
+                window.location.href = href;
+            }
+        }
     }
 });
 
@@ -442,19 +454,20 @@ chrome.storage.local.get(null, function(options) {
 
         // this should stop YouTube's html5 video player loading in the background
         var observer = new MutationObserver(function(mutations) {
-            mutations.some(function(mutation) {
+            mutations.some(function() {
                 var v = youtube.flash.querySelector("video");
                 if (v) {
                     v.addEventListener("play", function () {
                         if (document.contains(video)) {
                             this.pause();
                         }
-                    })
+                    });
                     observer.disconnect();
                     return true;
                 }
             });
         });
+
         observer.observe(youtube.flash, {subtree: true, childList: true});
 
         togglePlayer();
