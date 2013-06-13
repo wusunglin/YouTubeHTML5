@@ -328,7 +328,6 @@ function togglePlayer() {
             video.setAttribute("autoplay", "");
         }
         video.setAttribute("src", youtube.source[state.format]);
-        video.play();
     } else {
         enabled.checked = false;
         enabled.setAttribute("data-tooltip-text", chrome.i18n.getMessage("enable"));
