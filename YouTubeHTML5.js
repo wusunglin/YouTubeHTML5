@@ -217,14 +217,10 @@ video.addEventListener("volumechange", function () {
 });
 
 video.addEventListener("ended", function () {
-    if (!video.loop) {
-        var next = document.getElementById("watch7-playlist-bar-next-button");
-        if (next) {
-            var href = next.href;
-            if (href) {
-                window.location.href = href;
-            }
-        }
+    var next = document.getElementById("watch7-playlist-bar-next-button"),
+        auto = document.getElementById("watch7-playlist-bar-autoplay-button");
+    if (next && auto && auto.classList.contains("yt-uix-button-toggled")) {
+        window.location.href = next.href;
     }
 });
 
