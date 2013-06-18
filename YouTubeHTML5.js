@@ -21,12 +21,34 @@ quality = {
 // YouTube Elements
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// credit: http://userscripts.org/topics/127336
+function deobfuscateSig(a) {
+    function x(a, b) {
+        var c = a[0];
+        a[0] = a[b % a.length];
+        a[b] = c;
+        return a;
+    }
+    a = a.split("");
+    a = x(a, 52);
+    a = a.reverse();
+    a = a.slice(3);
+    a = x(a, 21);
+    a = a.reverse();
+    a = a.slice(3);
+    a = a.reverse();
+    return a.join("");
+}
+
 function parseStreamMap(html) {
     var streamMap = {};
     html.match(/"url_encoded_fmt_stream_map":\s"([^"]+)"/)[1].split(",").forEach(function (s) {
         var tag = s.match(/itag=(\d{0,2})/)[1],
             url = s.match(/url=(.*?)(\\u0026|$)/)[1],
-            sig = s.match(/sig=([A-Z0-9]*\.[A-Z0-9]*)/)[1];
+            sig = s.match(/[sig|s]=([A-Z0-9]*\.[A-Z0-9]*)/)[1];
+        if (sig.length > 81) {
+            sig = deobfuscateSig(sig);
+        }
         if (quality.hasOwnProperty(tag)) {
             streamMap[tag] = decodeURIComponent(url) + "&signature=" + sig;
         }
