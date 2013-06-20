@@ -3,7 +3,7 @@
 
 "use strict";
 
-var quality, youtube, state, video, toolbar, menu, enabled, format, speed, embiggen, download, reload;
+var quality, youtube, state, html5, video, toolbar, menu, enabled, format, speed, embiggen, download, reload;
 
 // wiki/YouTube#Quality_and_codecs
 quality = {
@@ -60,8 +60,7 @@ youtube = {
     container : document.getElementById("watch7-container"),
     content   : document.getElementById("watch7-content"),
     player    : document.getElementById("player"),
-    flash     : document.getElementById("player-api"),
-    html5     : document.getElementById("player-api").cloneNode(false),
+    video     : document.getElementById("player-api"),
     source    : parseStreamMap(document.body.innerHTML),
 };
 
@@ -161,8 +160,11 @@ video.setAttribute("controls", "");
 video.setAttribute("preload", "");
 video.setAttribute("src", youtube.source[Object.keys(youtube.source)[0]]);
 
-youtube.html5.classList.add("crx-html5-player");
-youtube.html5.appendChild(video);
+html5 = document.createElement("div");
+html5.setAttribute("id", "crx-html5-player");
+html5.classList.add("player-height");
+html5.classList.add("player-width");
+html5.appendChild(video);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Video Events
@@ -341,7 +343,8 @@ function togglePlayer() {
         enabled.checked = true;
         enabled.setAttribute("data-tooltip-text", chrome.i18n.getMessage("disable"));
         enabled.setAttribute("title", chrome.i18n.getMessage("disable"));
-        youtube.player.replaceChild(youtube.html5, youtube.flash);
+        youtube.container.classList.add("crx-html5");
+        youtube.player.replaceChild(html5, youtube.video);
         if (state.autoplay) {
             video.setAttribute("autoplay", "");
         }
@@ -350,7 +353,8 @@ function togglePlayer() {
         enabled.checked = false;
         enabled.setAttribute("data-tooltip-text", chrome.i18n.getMessage("enable"));
         enabled.setAttribute("title", chrome.i18n.getMessage("enable"));
-        youtube.player.replaceChild(youtube.flash, youtube.html5);
+        youtube.container.classList.remove("crx-html5");
+        youtube.player.replaceChild(youtube.video, html5);
     }
 }
 
@@ -472,7 +476,7 @@ chrome.storage.local.get(null, function(options) {
         // this should stop YouTube's html5 video player loading in the background
         var observer = new MutationObserver(function(mutations) {
             mutations.some(function() {
-                var v = youtube.flash.querySelector("video");
+                var v = youtube.video.querySelector("video");
                 if (v) {
                     v.addEventListener("play", function () {
                         if (document.contains(video)) {
@@ -485,7 +489,7 @@ chrome.storage.local.get(null, function(options) {
             });
         });
 
-        observer.observe(youtube.flash, {subtree: true, childList: true});
+        observer.observe(youtube.video, {subtree: true, childList: true});
 
         togglePlayer();
     }

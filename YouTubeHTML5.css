@@ -1,18 +1,41 @@
-#player-api.crx-html5-player {
-    height: 390px;
+#crx-html5-player {
+    background: #000;
+    overflow: hidden;
 }
 
-.watch-medium #watch7-playlist-tray-container {
-    height: 472px;
+
+#watch7-container.crx-html5 .player-height {
+    height: 360px;
 }
 
-.watch-medium #player-api.crx-html5-player {
+#watch7-container.crx-html5 .player-width {
+    width: 640px;
+}
+
+#watch7-container.crx-html5 .watch-medium .player-height {
     height: 480px;
 }
+#watch7-container.crx-html5 .watch-medium .player-width {
+    width: 854px;
+}
 
-.watch-large #player-api.crx-html5-player {
+#watch7-container.crx-html5 .watch-large .player-height {
     height: 720px;
 }
+#watch7-container.crx-html5 .watch-large .player-width {
+    width: 1280px;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 div#crx-html5
