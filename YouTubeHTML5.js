@@ -3,10 +3,8 @@
 
 "use strict";
 
-var quality, youtube, state, html5, video, toolbar, menu, enabled, format, speed, embiggen, download, reload;
-
 // wiki/YouTube#Quality_and_codecs
-quality = {
+var quality = {
     18: "MP4 360p",
     22: "MP4 720p",
     37: "MP4 1080p",
@@ -21,23 +19,121 @@ quality = {
 // YouTube Elements
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// credit: http://userscripts.org/topics/127336
-function deobfuscateSig(a) {
-    function x(a, b) {
-        var c = a[0];
-        a[0] = a[b % a.length];
-        a[b] = c;
-        return a;
+// credit: http://userscripts.org/scripts/show/25105
+
+function decryptSignature(s) {
+
+    var a, b;
+
+    function swap(x, y) {
+        var z = x[0];
+        x[0] = x[y % x.length];
+        x[y] = z;
+        return x;
     }
-    a = a.split("");
-    a = x(a, 52);
-    a = a.reverse();
-    a = a.slice(3);
-    a = x(a, 21);
-    a = a.reverse();
-    a = a.slice(3);
-    a = a.reverse();
-    return a.join("");
+
+    if (s.length === 88) {
+        a = s.split("");
+        a = a.slice(2);
+        a = swap(a, 1);
+        a = swap(a, 10);
+        a = a.reverse();
+        a = a.slice(2);
+        a = swap(a, 23);
+        a = a.slice(3);
+        a = swap(a, 15);
+        a = swap(a, 34);
+        s = a.join("");
+    }
+
+    if (s.length === 87) {
+        a = s.substr(44, 40).split("").reverse().join("");
+        b = s.substr(3, 40).split("").reverse().join("");
+        s = a.substr(21, 1) +
+            a.substr(1, 20) +
+            a.substr(0, 1) +
+            b.substr(22, 9) +
+            s.substr(0, 1) +
+            a.substr(32, 8) +
+            s.substr(43, 1) +
+            b;
+    }
+
+    if (s.length === 86) {
+        a = s.substr(2, 40);
+        b = s.substr(43, 40);
+        s = a +
+            s.substr(42, 1) +
+            b.substr(0, 20) +
+            b.substr(39, 1) +
+            b.substr(21, 18) +
+            b.substr(20, 1);
+    }
+
+    if (s.length === 85) {
+        a = s.substr(44, 40).split("").reverse().join("");
+        b = s.substr(3, 40).split("").reverse().join("");
+        s = a.substr(7, 1) +
+            a.substr(1, 6) +
+            a.substr(0, 1) +
+            a.substr(8, 15) +
+            s.substr(0, 1) +
+            a.substr(24, 9) +
+            s.substr(1, 1) +
+            a.substr(34, 6) +
+            s.substr(43, 1) +
+            b;
+    }
+
+    if (s.length === 84) {
+        a = s.substr(44, 40).split("").reverse().join("");
+        b = s.substr(3, 40).split("").reverse().join("");
+        s = a +
+            s.substr(43, 1) +
+            b.substr(0, 6) +
+            s.substr(2, 1) +
+            b.substr(7, 9) +
+            b.substr(39, 1) +
+            b.substr(17, 22) +
+            b.substr(16, 1);
+    }
+
+    if (s.length === 83) {
+        a = s.substr(43, 40).split("").reverse().join("");
+        b = s.substr(2, 40).split("").reverse().join("");
+        s = a.substr(30, 1) +
+            a.substr(1, 26) +
+            b.substr(39, 1) +
+            a.substr(28, 2) +
+            a.substr(0, 1) +
+            a.substr(31, 9) +
+            s.substr(42, 1) +
+            b.substr(0, 5) +
+            a.substr(27, 1) +
+            b.substr(6, 33) +
+            b.substr(5, 1);
+    }
+
+    if (s.length === 82) {
+        a = s.substr(34, 48).split("").reverse().join("");
+        b = s.substr(0, 33).split("").reverse().join("");
+        s = a.substr(45, 1) +
+            a.substr(2, 12) +
+            a.substr(0, 1) +
+            a.substr(15, 26) +
+            s.substr(33, 1) +
+            a.substr(42, 1) +
+            a.substr(43, 1) +
+            a.substr(44, 1) +
+            a.substr(41, 1) +
+            a.substr(46, 1) +
+            b.substr(32, 1) +
+            a.substr(14, 1) +
+            b.substr(0, 32) +
+            a.substr(47, 1);
+    }
+
+    return s;
 }
 
 function parseStreamMap(html) {
@@ -47,7 +143,7 @@ function parseStreamMap(html) {
             url = s.match(/url=(.*?)(\\u0026|$)/)[1],
             sig = s.match(/[sig|s]=([A-Z0-9]*\.[A-Z0-9]*)/)[1];
         if (sig.length > 81) {
-            sig = deobfuscateSig(sig);
+            sig = decryptSignature(sig);
         }
         if (quality.hasOwnProperty(tag)) {
             streamMap[tag] = decodeURIComponent(url) + "&signature=" + sig;
@@ -56,11 +152,13 @@ function parseStreamMap(html) {
     return streamMap;
 }
 
-youtube = {
-    container : document.getElementById("watch7-container"),
-    content   : document.getElementById("watch7-content"),
-    player    : document.getElementById("player"),
-    video     : document.getElementById("player-api"),
+var youtube = {
+    container : document.querySelector("#watch7-container"),
+    content   : document.querySelector("#watch7-content"),
+    player    : document.querySelector("#player"),
+    video     : document.querySelector("#player-api"),
+    next      : document.querySelector("#watch7-playlist-bar-next-button"),
+    auto      : document.querySelector("#watch7-playlist-bar-autoplay-button"),
     source    : parseStreamMap(document.body.innerHTML),
 };
 
@@ -68,23 +166,14 @@ youtube = {
 // State
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-state = (function () {
-    var autoplay = true,
-        embiggen = (document.cookie.indexOf("wide=1") !== -1),
+var state = (function () {
+    var embiggen = (document.cookie.indexOf("wide=1") !== -1),
         format   = Object.keys(youtube.source)[0],
         speed    = 1,
         time     = 0,
         volume   = 1,
         muted    = false;
     return Object.freeze(Object.create(null, {
-        autoplay: {
-            get: function () { return autoplay; },
-            set: function (x) {
-                if (typeof x === "boolean") {
-                    autoplay = x;
-                }
-            }
-        },
         embiggen: {
             get: function () { return embiggen; },
             set: function (x) {
@@ -152,18 +241,20 @@ state = (function () {
 // Video
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+var video, html5;
+
 video = document.createElement("video");
 video.setAttribute("id", "crx-html5-video");
-video.setAttribute("width", "100%");
-video.setAttribute("height", "100%");
 video.setAttribute("controls", "");
 video.setAttribute("preload", "");
+video.setAttribute("autoplay", "");
 video.setAttribute("src", youtube.source[Object.keys(youtube.source)[0]]);
 
 html5 = document.createElement("div");
 html5.setAttribute("id", "crx-html5-player");
 html5.classList.add("player-height");
 html5.classList.add("player-width");
+html5.classList.add("off-screen-target");
 html5.appendChild(video);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -241,10 +332,8 @@ video.addEventListener("volumechange", function () {
 });
 
 video.addEventListener("ended", function () {
-    var next = document.getElementById("watch7-playlist-bar-next-button"),
-        auto = document.getElementById("watch7-playlist-bar-autoplay-button");
-    if (next && auto && auto.classList.contains("yt-uix-button-toggled")) {
-        window.location.href = next.href;
+    if (youtube.next && youtube.auto && youtube.auto.classList.contains("yt-uix-button-toggled")) {
+        window.location.href = youtube.next.href;
     }
 });
 
@@ -252,11 +341,7 @@ video.addEventListener("ended", function () {
 // Toolbar
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-toolbar = document.createElement("div");
-toolbar.setAttribute("id", "crx-html5");
-
-menu = document.createElement("div");
-menu.setAttribute("id", "crx-html5-menu");
+var enabled, format, speed, embiggen, download, reload, menu, toolbar;
 
 enabled = document.createElement("input");
 enabled.setAttribute("id", "crx-html5-enabled");
@@ -324,15 +409,18 @@ reload.setAttribute("data-tooltip-text", chrome.i18n.getMessage("reload"));
 reload.setAttribute("title", chrome.i18n.getMessage("reload"));
 reload.textContent = chrome.i18n.getMessage("reload");
 
+menu = document.createElement("div");
+menu.setAttribute("id", "crx-html5-menu");
 menu.appendChild(enabled);
 menu.appendChild(format);
 menu.appendChild(speed);
 menu.appendChild(embiggen);
 menu.appendChild(download);
 menu.appendChild(reload);
-toolbar.appendChild(menu);
 
-youtube.content.insertBefore(toolbar, youtube.content.firstElementChild);
+toolbar = document.createElement("div");
+toolbar.setAttribute("id", "crx-html5-toolbar");
+toolbar.appendChild(menu);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Toolbar Events
@@ -343,17 +431,14 @@ function togglePlayer() {
         enabled.checked = true;
         enabled.setAttribute("data-tooltip-text", chrome.i18n.getMessage("disable"));
         enabled.setAttribute("title", chrome.i18n.getMessage("disable"));
-        youtube.container.classList.add("crx-html5");
+        document.body.classList.add("crx-html5");
         youtube.player.replaceChild(html5, youtube.video);
-        if (state.autoplay) {
-            video.setAttribute("autoplay", "");
-        }
         video.setAttribute("src", youtube.source[state.format]);
     } else {
         enabled.checked = false;
         enabled.setAttribute("data-tooltip-text", chrome.i18n.getMessage("enable"));
         enabled.setAttribute("title", chrome.i18n.getMessage("enable"));
-        youtube.container.classList.remove("crx-html5");
+        document.body.classList.remove("crx-html5");
         youtube.player.replaceChild(youtube.video, html5);
     }
 }
@@ -363,43 +448,43 @@ function toggleSize() {
         embiggen.setAttribute("data-tooltip-text", chrome.i18n.getMessage("shrink"));
         embiggen.setAttribute("title", chrome.i18n.getMessage("shrink"));
         youtube.container.classList.add("watch-wide");
-        youtube.player.classList.add("watch-playlist-collapsed");
         youtube.player.classList.add("watch-medium");
+        youtube.player.classList.add("watch-playlist-collapsed");
     } else {
         embiggen.setAttribute("data-tooltip-text", chrome.i18n.getMessage("embiggen"));
         embiggen.setAttribute("title", chrome.i18n.getMessage("embiggen"));
         youtube.container.classList.remove("watch-wide");
-        youtube.player.classList.remove("watch-playlist-collapsed");
         youtube.player.classList.remove("watch-medium");
+        youtube.player.classList.remove("watch-playlist-collapsed");
     }
 }
 
-enabled.addEventListener("change", function() {
+enabled.addEventListener("change", function () {
     togglePlayer();
 });
 
-format.addEventListener("change", function() {
+format.addEventListener("change", function () {
     state.format = this.value;
     video.setAttribute("src", youtube.source[state.format]);
 });
 
-speed.addEventListener("change", function() {
+speed.addEventListener("change", function () {
     state.speed = this.value;
     video.playbackRate = state.speed;
 });
 
-embiggen.addEventListener("change", function() {
+embiggen.addEventListener("change", function () {
     state.embiggen = this.checked;
     toggleSize();
 });
 
-download.addEventListener("click", function() {
+download.addEventListener("click", function () {
     var x = (parseInt(state.format, 10) < 43) ? ".mp4" : ".webm";
     this.setAttribute("download", document.title + x);
     this.setAttribute("href", youtube.source[state.format]);
 });
 
-reload.addEventListener("click", function() {
+reload.addEventListener("click", function () {
     video.setAttribute("src", youtube.source[state.format]);
 });
 
@@ -407,17 +492,17 @@ reload.addEventListener("click", function() {
 // init
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-chrome.storage.local.get(null, function(options) {
+youtube.content.insertBefore(toolbar, youtube.content.firstElementChild);
 
-    // options {
-    //     (bool)   space    = use shift+space to play/pause video
-    //     (string) format   = preferred format if available
-    //     (float)  volume   = volume
-    //     (bool)   muted    = muted
-    //     (bool)   autoplay = autoplay
-    //     (bool)   embiggen = embiggen video player
-    //     (bool)   enabled  = auto switch to html5 video
-    // }
+chrome.storage.local.get(null, function (options) {
+
+    // (bool)   space    = use shift+space to play/pause video
+    // (string) format   = preferred format if available
+    // (float)  volume   = volume
+    // (bool)   muted    = muted
+    // (bool)   autoplay = autoplay
+    // (bool)   embiggen = embiggen video player
+    // (bool)   enabled  = auto switch to html5 video
 
     if (options.space === true) {
         document.addEventListener("keydown", function (e) {
@@ -462,7 +547,7 @@ chrome.storage.local.get(null, function(options) {
     }
 
     if (options.autoplay === false) {
-        state.autoplay = false;
+        video.removeAttribute("autoplay");
     }
 
     if (typeof options.embiggen === "boolean") {
@@ -474,8 +559,8 @@ chrome.storage.local.get(null, function(options) {
     if (options.enabled === true) {
 
         // this should stop YouTube's html5 video player loading in the background
-        var observer = new MutationObserver(function(mutations) {
-            mutations.some(function() {
+        var observer = new MutationObserver(function (mutations) {
+            mutations.some(function () {
                 var v = youtube.video.querySelector("video");
                 if (v) {
                     v.addEventListener("play", function () {

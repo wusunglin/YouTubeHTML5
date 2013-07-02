@@ -1,44 +1,56 @@
+.crx-html5 .player-height {
+    height: 360px;
+}
+
+.crx-html5 .player-width {
+    width: 640px;
+}
+
+.crx-html5 .watch-medium .player-height {
+    height: 480px;
+}
+
+.crx-html5 .watch-medium .player-width {
+    width: 854px;
+}
+
+.crx-html5 .watch-large .player-height {
+    height: 720px;
+}
+
+.crx-html5 .watch-large .player-width {
+    width: 1280px;
+}
+
+.crx-html5 #watch7-playlist-tray {
+    bottom: 0px;
+}
+
+.crx-html5 #watch7-playlist-tray-trim {
+    display: none;
+}
+
+.crx-html5 .watch7-playlist-bar-right {
+    z-index: 100000
+}
+
+.crx-html5 .watch-sidebar-body {
+    margin-top: 30px;
+}
+
 #crx-html5-player {
     background: #000;
     overflow: hidden;
 }
 
-
-#watch7-container.crx-html5 .player-height {
-    height: 360px;
+#crx-html5-player video {
+    position: relative;
+    width: 100% !important;
+    height: 100% !important;
 }
-
-#watch7-container.crx-html5 .player-width {
-    width: 640px;
-}
-
-#watch7-container.crx-html5 .watch-medium .player-height {
-    height: 480px;
-}
-#watch7-container.crx-html5 .watch-medium .player-width {
-    width: 854px;
-}
-
-#watch7-container.crx-html5 .watch-large .player-height {
-    height: 720px;
-}
-#watch7-container.crx-html5 .watch-large .player-width {
-    width: 1280px;
-}
-
-
-
-
-
-
-
-
-
-
-
 
 /*
-div#crx-html5
+div#crx-html5-toolbar
     div#crx-html5-menu
         input[type=checkbox]#crx-html5-enabled
         select#crx-html5-format
@@ -52,7 +64,7 @@ div#crx-html5
     display: none;
 }
 
-#crx-html5 {
+#crx-html5-toolbar {
     border: 1px solid #e6e6e6;
     border-bottom-width: 0;
     border-top-width: 0;
