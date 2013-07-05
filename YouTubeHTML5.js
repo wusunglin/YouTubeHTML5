@@ -563,7 +563,7 @@ chrome.storage.local.get(null, function (options) {
             mutations.some(function () {
                 var v = youtube.video.querySelector("video");
                 if (v) {
-                    v.addEventListener("play", function () {
+                    v.addEventListener("timeupdate", function() {
                         if (document.contains(video)) {
                             this.pause();
                         }
