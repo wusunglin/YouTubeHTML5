@@ -50,6 +50,10 @@
     height: 100% !important;
 }
 
+#crx-html5-player video::-webkit-media-controls-time-remaining-display {
+    display: block !important;
+}
+
 /*
 div#crx-html5-toolbar
     div#crx-html5-menu

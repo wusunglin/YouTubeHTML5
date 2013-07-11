@@ -8,7 +8,7 @@ var quality = {
     18: "MP4 360p",
     22: "MP4 720p",
     37: "MP4 1080p",
-    38: "MP4 3072p",
+    38: "MP4 4K",
     43: "WebM 360p",
     44: "WebM 480p",
     45: "WebM 720p",
@@ -99,7 +99,7 @@ function decryptSignature(s) {
     }
 
     if (s.length === 83) {
-        s = s.substr(0,81)
+        s = s.substr(0, 81);
     }
 
     if (s.length === 82) {
@@ -551,7 +551,7 @@ chrome.storage.local.get(null, function (options) {
             mutations.some(function () {
                 var v = youtube.video.querySelector("video");
                 if (v) {
-                    v.addEventListener("timeupdate", function() {
+                    v.addEventListener("timeupdate", function () {
                         if (document.contains(video)) {
                             this.pause();
                         }
