@@ -99,7 +99,20 @@ function decryptSignature(s) {
     }
 
     if (s.length === 83) {
-        s = s.substr(0, 81);
+        a = s.substr(2, 40);
+        b = s.substr(43, 40);
+        s = a.substr(4, 1) +
+            a.substr(1, 3) +
+            a.substr(31, 1) +
+            a.substr(5, 17) +
+            s.substr(0, 1) +
+            a.substr(23, 8) +
+            b.substr(10, 1) +
+            a.substr(32, 8) +
+            s.substr(42, 1) +
+            b.substr(0, 10) +
+            a.substr(22, 1) +
+            b.substr(11, 29);
     }
 
     if (s.length === 82) {
