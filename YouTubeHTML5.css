@@ -52,6 +52,7 @@
 
 #crx-html5-player video::-webkit-media-controls-time-remaining-display {
     display: block !important;
+    opacity: .6;
 }
 
 /*

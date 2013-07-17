@@ -21,120 +21,87 @@ var quality = {
 
 // credit: http://userscripts.org/scripts/show/25105
 
-function decryptSignature(s) {
+function decryptSignature(sig) {
 
-    var a, b;
-
-    function swap(x, y) {
-        var z = x[0];
-        x[0] = x[y % x.length];
-        x[y] = z;
-        return x;
+    function swap(a, b) {
+        var c = a[0];
+        a[0] = a[b % a.length];
+        a[b] = c;
+        return a;
     }
 
-    if (s.length === 88) {
-        a = s.split("");
-        a = a.slice(2);
-        a = swap(a, 1);
-        a = swap(a, 10);
-        a = a.reverse();
-        a = a.slice(2);
-        a = swap(a, 23);
-        a = a.slice(3);
-        a = swap(a, 15);
-        a = swap(a, 34);
-        s = a.join("");
+    function isString(s) {
+        return (typeof s === "string" || s instanceof String);
     }
 
-    if (s.length === 87) {
-        a = s.substr(44, 40).split("").reverse().join("");
-        b = s.substr(3, 40).split("").reverse().join("");
-        s = a.substr(21, 1) +
-            a.substr(1, 20) +
-            a.substr(0, 1) +
-            b.substr(22, 9) +
-            s.substr(0, 1) +
-            a.substr(32, 8) +
-            s.substr(43, 1) +
-            b;
+    function isInteger(n) {
+        return (typeof n === "number" && n % 1 === 0);
     }
 
-    if (s.length === 86) {
-        a = s.substr(2, 40);
-        b = s.substr(43, 40);
-        s = a +
-            s.substr(42, 1) +
-            b.substr(0, 20) +
-            b.substr(39, 1) +
-            b.substr(21, 18) +
-            b.substr(20, 1);
+    function reverseString(s) {
+        return isString(s) ? s.split("").reverse().join("") : s;
     }
 
-    if (s.length === 85) {
-        a = s.substr(44, 40).split("").reverse().join("");
-        b = s.substr(3, 40).split("").reverse().join("");
-        s = a.substr(7, 1) +
-            a.substr(1, 6) +
-            a.substr(0, 1) +
-            a.substr(8, 15) +
-            s.substr(0, 1) +
-            a.substr(24, 9) +
-            s.substr(1, 1) +
-            a.substr(34, 6) +
-            s.substr(43, 1) +
-            b;
+    function decode(sig, arr) { // encoded decryption
+        if (!isString(sig)) {
+            return null;
+        }
+        var sigA = sig.split(""), i, act;
+        for (i = 0; i < arr.length; i += 1) {
+            act = arr[i];
+            if (!isInteger(act)) {
+                return null;
+            }
+            sigA = (act > 0) ? swap(sigA, act) : ((act === 0) ? sigA.reverse() : sigA.slice(-act));
+        }
+        return sigA.join("");
     }
 
-    if (s.length === 84) {
-        a = s.substr(44, 40).split("").reverse().join("");
-        b = s.substr(3, 40).split("").reverse().join("");
-        s = a +
-            s.substr(43, 1) +
-            b.substr(0, 6) +
-            s.substr(2, 1) +
-            b.substr(7, 9) +
-            b.substr(39, 1) +
-            b.substr(17, 22) +
-            b.substr(16, 1);
+    var sigA, sigB;
+
+    if (sig.length === 92) {
+        sig = decode(sig, [-2, 0, -3, 9, -3, 43, -3, 0, 23]);
     }
 
-    if (s.length === 83) {
-        a = s.substr(2, 40);
-        b = s.substr(43, 40);
-        s = a.substr(4, 1) +
-            a.substr(1, 3) +
-            a.substr(31, 1) +
-            a.substr(5, 17) +
-            s.substr(0, 1) +
-            a.substr(23, 8) +
-            b.substr(10, 1) +
-            a.substr(32, 8) +
-            s.substr(42, 1) +
-            b.substr(0, 10) +
-            a.substr(22, 1) +
-            b.substr(11, 29);
+    if (sig.length === 88) {
+        sig = decode(sig, [-2, 1, 10, 0, -2, 23, -3, 15, 34]);
     }
 
-    if (s.length === 82) {
-        a = s.substr(34, 48).split("").reverse().join("");
-        b = s.substr(0, 33).split("").reverse().join("");
-        s = a.substr(45, 1) +
-            a.substr(2, 12) +
-            a.substr(0, 1) +
-            a.substr(15, 26) +
-            s.substr(33, 1) +
-            a.substr(42, 1) +
-            a.substr(43, 1) +
-            a.substr(44, 1) +
-            a.substr(41, 1) +
-            a.substr(46, 1) +
-            b.substr(32, 1) +
-            a.substr(14, 1) +
-            b.substr(0, 32) +
-            a.substr(47, 1);
+    if (sig.length === 87) {
+        sigA = reverseString(sig.substr(44, 40));
+        sigB = reverseString(sig.substr(3, 40));
+        sig = sigA.substr(21, 1) + sigA.substr(1, 20) + sigA.substr(0, 1) + sigB.substr(22, 9) + sig.substr(0, 1) + sigA.substr(32, 8) + sig.substr(43, 1) + sigB;
     }
 
-    return s;
+    if (sig.length === 86) {
+        sigA = sig.substr(2, 40);
+        sigB = sig.substr(43, 40);
+        sig = sigA + sig.substr(42, 1) + sigB.substr(0, 20) + sigB.substr(39, 1) + sigB.substr(21, 18) + sigB.substr(20, 1);
+    }
+
+    if (sig.length === 85) {
+        sigA = reverseString(sig.substr(44, 40));
+        sigB = reverseString(sig.substr(3, 40));
+        sig = sigA.substr(7, 1) + sigA.substr(1, 6) + sigA.substr(0, 1) + sigA.substr(8, 15) + sig.substr(0, 1) + sigA.substr(24, 9) + sig.substr(1, 1) + sigA.substr(34, 6) + sig.substr(43, 1) + sigB;
+    }
+
+    if (sig.length === 84) {
+        sigA = reverseString(sig.substr(44, 40));
+        sigB = reverseString(sig.substr(3, 40));
+        sig = sigA + sig.substr(43, 1) + sigB.substr(0, 6) + sig.substr(2, 1) + sigB.substr(7, 9) + sigB.substr(39, 1) + sigB.substr(17, 22) + sigB.substr(16, 1);
+    }
+
+    if (sig.length === 83) {
+        sig = decode(sig, [24, 53, -2, 31, 4]);
+    }
+
+    if (sig.length === 82) {
+        sigA = reverseString(sig.substr(34, 48));
+        sigB = reverseString(sig.substr(0, 33));
+        sig = sigA.substr(45, 1) + sigA.substr(2, 12) + sigA.substr(0, 1) + sigA.substr(15, 26) + sig.substr(33, 1) + sigA.substr(42, 1) + sigA.substr(43, 1) + sigA.substr(44, 1) + sigA.substr(41, 1) + sigA.substr(46, 1) + sigB.substr(32, 1) + sigA.substr(14, 1) + sigB.substr(0, 32) + sigA.substr(47, 1);
+    }
+
+    return sig;
 }
 
 function parseStreamMap(html) {
@@ -142,7 +109,7 @@ function parseStreamMap(html) {
     html.match(/"url_encoded_fmt_stream_map":\s"([^"]+)"/)[1].split(",").forEach(function (s) {
         var tag = s.match(/itag=(\d{0,2})/)[1],
             url = s.match(/url=(.*?)(\\u0026|$)/)[1],
-            sig = s.match(/[sig|s]=([A-Z0-9]*\.[A-Z0-9]*)/)[1];
+            sig = s.match(/[sig|s]=([A-Z0-9]*\.[A-Z0-9]*(?:\.[A-Z0-9]*)?)/)[1];
         if (sig.length > 81) {
             sig = decryptSignature(sig);
         }
