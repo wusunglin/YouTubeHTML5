@@ -80,9 +80,7 @@ function decryptSignature(sig) {
     }
 
     if (sig.length === 85) {
-        sigA = reverseString(sig.substr(44, 40));
-        sigB = reverseString(sig.substr(3, 40));
-        sig = sigA.substr(7, 1) + sigA.substr(1, 6) + sigA.substr(0, 1) + sigA.substr(8, 15) + sig.substr(0, 1) + sigA.substr(24, 9) + sig.substr(1, 1) + sigA.substr(34, 6) + sig.substr(43, 1) + sigB;
+        sig = decode(sig, [0, -2, 17, 61, 0, -1, 7, -1]);
     }
 
     if (sig.length === 84) {
