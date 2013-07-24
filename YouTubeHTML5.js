@@ -19,7 +19,7 @@ var quality = {
 // YouTube Elements
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// credit: http://userscripts.org/scripts/show/25105
+// credit: http://userscripts.org/scripts/show/25105 #1.7.2
 
 function decryptSignature(sig) {
 
@@ -68,15 +68,7 @@ function decryptSignature(sig) {
     }
 
     if (sig.length === 87) {
-        sigA = reverseString(sig.substr(44, 40));
-        sigB = reverseString(sig.substr(3, 40));
-        sig = sigA.substr(21, 1) + sigA.substr(1, 20) + sigA.substr(0, 1) + sigB.substr(22, 9) + sig.substr(0, 1) + sigA.substr(32, 8) + sig.substr(43, 1) + sigB;
-    }
-
-    if (sig.length === 86) {
-        sigA = sig.substr(2, 40);
-        sigB = sig.substr(43, 40);
-        sig = sigA + sig.substr(42, 1) + sigB.substr(0, 20) + sigB.substr(39, 1) + sigB.substr(21, 18) + sigB.substr(20, 1);
+        sig = decode(sig, [-3, 0, 63, -2, 0, -1]);
     }
 
     if (sig.length === 85) {
