@@ -10,6 +10,7 @@ var enabled  = document.getElementById("enabled"),
     mp4      = document.getElementById("mp4"),
     webm     = document.getElementById("webm"),
     f360     = document.getElementById("f360"),
+    f480     = document.getElementById("f480"),
     f720     = document.getElementById("f720"),
     f1080    = document.getElementById("f1080");
 
@@ -32,11 +33,15 @@ space.addEventListener("change", function () {
 function format() {
     var f = null;
     if (mp4.checked) {
+        f480.disabled = true;
         if (f360.checked) { f = "18"; }
+        if (f480.checked) { f = "18"; f360.checked = true; }
         if (f720.checked) { f = "22"; }
         if (f1080.checked) { f = "37"; }
     } else {
+        f480.disabled = false;
         if (f360.checked) { f = "43"; }
+        if (f480.checked) { f = "44"; }
         if (f720.checked) { f = "45"; }
         if (f1080.checked) { f = "46"; }
     }
@@ -46,6 +51,7 @@ function format() {
 mp4.addEventListener("change", format);
 webm.addEventListener("change", format);
 f360.addEventListener("change", format);
+f480.addEventListener("change", format);
 f720.addEventListener("change", format);
 f1080.addEventListener("change", format);
 
@@ -73,14 +79,17 @@ chrome.storage.local.get(null, function (options) {
     case "18":
         mp4.checked = true;
         f360.checked = true;
+        f480.disabled = true;
         break;
     case "22":
         mp4.checked = true;
         f720.checked = true;
+        f480.disabled = true;
         break;
     case "37":
         mp4.checked = true;
         f1080.checked = true;
+        f480.disabled = true;
         break;
     case "43":
         webm.checked = true;
@@ -94,6 +103,13 @@ chrome.storage.local.get(null, function (options) {
         webm.checked = true;
         f1080.checked = true;
         break;
+    }
+
+    var video = document.createElement("video");
+
+    if (!video.canPlayType("video/mp4")) {
+        mp4.disabled = true;
+        webm.checked = true;
     }
 
 });

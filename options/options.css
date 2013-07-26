@@ -31,3 +31,7 @@ label {
 input {
 	margin: 0;
 }
+
+input:disabled + label {
+	color: #999;
+}

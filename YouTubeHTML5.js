@@ -5,15 +5,23 @@
 
 // wiki/YouTube#Quality_and_codecs
 var quality = {
-    18: "MP4 360p",
-    22: "MP4 720p",
-    37: "MP4 1080p",
-    38: "MP4 4K",
-    43: "WebM 360p",
-    44: "WebM 480p",
-    45: "WebM 720p",
-    46: "WebM 1080p",
+    18: {type: "video/mp4",  label: "MP4 360p"  },
+    22: {type: "video/mp4",  label: "MP4 720p"  },
+    37: {type: "video/mp4",  label: "MP4 1080p" },
+    38: {type: "video/mp4",  label: "MP4 4K"    },
+    43: {type: "video/webm", label: "WebM 360p" },
+    44: {type: "video/webm", label: "WebM 480p" },
+    45: {type: "video/webm", label: "WebM 720p" },
+    46: {type: "video/webm", label: "WebM 1080p"},
 };
+
+var video;
+
+video = document.createElement("video");
+video.setAttribute("id", "crx-html5-video");
+video.setAttribute("controls", "");
+video.setAttribute("preload", "");
+video.setAttribute("autoplay", "");
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // YouTube Elements
@@ -46,7 +54,7 @@ function decryptSignature(sig) {
         if (!isString(sig)) {
             return null;
         }
-        var sigA = sig.split(""), i, act;
+        var sigA = sig.split(""), i, act, result;
         for (i = 0; i < arr.length; i += 1) {
             act = arr[i];
             if (!isInteger(act)) {
@@ -54,35 +62,31 @@ function decryptSignature(sig) {
             }
             sigA = (act > 0) ? swap(sigA, act) : ((act === 0) ? sigA.reverse() : sigA.slice(-act));
         }
-        return sigA.join("");
+        result = sigA.join("");
+        return (result.length === 81) ? result : sig;
     }
 
-    var sigA, sigB;
+    var sigA, sigB, arr, decodeArray;
 
-    if (sig.length === 92) {
-        sig = decode(sig, [-2, 0, -3, 9, -3, 43, -3, 0, 23]);
-    }
+    decodeArray = {
+        92: [-2, 0, -3, 9, -3, 43, -3, 0, 23],
+        88: [-2, 1, 10, 0, -2, 23, -3, 15, 34],
+        87: [-3, 0, 63, -2, 0, -1],
+        85: [0, -2, 17, 61, 0, -1, 7, -1],
+        83: [24, 53, -2, 31, 4],
+        81: [34, 29, 9, 0, 39, 24]
+    };
 
-    if (sig.length === 88) {
-        sig = decode(sig, [-2, 1, 10, 0, -2, 23, -3, 15, 34]);
-    }
+    arr = decodeArray[sig.length];
 
-    if (sig.length === 87) {
-        sig = decode(sig, [-3, 0, 63, -2, 0, -1]);
-    }
-
-    if (sig.length === 85) {
-        sig = decode(sig, [0, -2, 17, 61, 0, -1, 7, -1]);
+    if (arr !== null) {
+        sig = decode(sig, arr);
     }
 
     if (sig.length === 84) {
         sigA = reverseString(sig.substr(44, 40));
         sigB = reverseString(sig.substr(3, 40));
         sig = sigA + sig.substr(43, 1) + sigB.substr(0, 6) + sig.substr(2, 1) + sigB.substr(7, 9) + sigB.substr(39, 1) + sigB.substr(17, 22) + sigB.substr(16, 1);
-    }
-
-    if (sig.length === 83) {
-        sig = decode(sig, [24, 53, -2, 31, 4]);
     }
 
     if (sig.length === 82) {
@@ -104,7 +108,11 @@ function parseStreamMap(html) {
             sig = decryptSignature(sig);
         }
         if (quality.hasOwnProperty(tag)) {
-            streamMap[tag] = decodeURIComponent(url) + "&signature=" + sig;
+            if (video.canPlayType(quality[tag].type)) {
+                streamMap[tag] = decodeURIComponent(url) + "&signature=" + sig;
+            } else {
+                delete quality[tag];
+            }
         }
     });
     return streamMap;
@@ -196,26 +204,6 @@ var state = (function () {
 }());
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Video
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-var video, html5;
-
-video = document.createElement("video");
-video.setAttribute("id", "crx-html5-video");
-video.setAttribute("controls", "");
-video.setAttribute("preload", "");
-video.setAttribute("autoplay", "");
-video.setAttribute("src", youtube.source[Object.keys(youtube.source)[0]]);
-
-html5 = document.createElement("div");
-html5.setAttribute("id", "crx-html5-player");
-html5.classList.add("player-height");
-html5.classList.add("player-width");
-html5.classList.add("off-screen-target");
-html5.appendChild(video);
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Video Events
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -296,6 +284,18 @@ video.addEventListener("ended", function () {
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Player
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+var html5;
+html5 = document.createElement("div");
+html5.setAttribute("id", "crx-html5-player");
+html5.classList.add("player-height");
+html5.classList.add("player-width");
+html5.classList.add("off-screen-target");
+html5.appendChild(video);
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Toolbar
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -320,7 +320,7 @@ Object.keys(youtube.source).forEach(function (k) {
         o.setAttribute("selected", "");
     }
     o.setAttribute("value", k);
-    o.textContent = quality[k];
+    o.textContent = quality[k].label;
     format.appendChild(o);
 });
 
@@ -449,6 +449,8 @@ reload.addEventListener("click", function () {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // init
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+video.setAttribute("src", youtube.source[Object.keys(youtube.source)[0]]);
 
 youtube.content.insertBefore(toolbar, youtube.content.firstElementChild);
 
