@@ -27,7 +27,7 @@ video.setAttribute("autoplay", "");
 // YouTube Elements
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// credit: http://userscripts.org/scripts/show/25105 #1.7.2
+// credit: http://userscripts.org/scripts/show/25105 #1.7.4
 
 function decryptSignature(sig) {
 
