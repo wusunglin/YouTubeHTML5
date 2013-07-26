@@ -27,7 +27,7 @@ video.setAttribute("autoplay", "");
 // YouTube Elements
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// credit: http://userscripts.org/scripts/show/25105 #1.7.4
+// credit: http://userscripts.org/scripts/show/25105 v1.7.5
 
 function decryptSignature(sig) {
 
@@ -46,10 +46,6 @@ function decryptSignature(sig) {
         return (typeof n === "number" && n % 1 === 0);
     }
 
-    function reverseString(s) {
-        return isString(s) ? s.split("").reverse().join("") : s;
-    }
-
     function decode(sig, arr) { // encoded decryption
         if (!isString(sig)) {
             return null;
@@ -66,7 +62,7 @@ function decryptSignature(sig) {
         return (result.length === 81) ? result : sig;
     }
 
-    var sigA, sigB, arr, decodeArray;
+    var decodeArray, arr;
 
     decodeArray = {
         92: [-2, 0, -3, 9, -3, 43, -3, 0, 23],
@@ -83,18 +79,6 @@ function decryptSignature(sig) {
         sig = decode(sig, arr);
     }
 
-    if (sig.length === 84) {
-        sigA = reverseString(sig.substr(44, 40));
-        sigB = reverseString(sig.substr(3, 40));
-        sig = sigA + sig.substr(43, 1) + sigB.substr(0, 6) + sig.substr(2, 1) + sigB.substr(7, 9) + sigB.substr(39, 1) + sigB.substr(17, 22) + sigB.substr(16, 1);
-    }
-
-    if (sig.length === 82) {
-        sigA = reverseString(sig.substr(34, 48));
-        sigB = reverseString(sig.substr(0, 33));
-        sig = sigA.substr(45, 1) + sigA.substr(2, 12) + sigA.substr(0, 1) + sigA.substr(15, 26) + sig.substr(33, 1) + sigA.substr(42, 1) + sigA.substr(43, 1) + sigA.substr(44, 1) + sigA.substr(41, 1) + sigA.substr(46, 1) + sigB.substr(32, 1) + sigA.substr(14, 1) + sigB.substr(0, 32) + sigA.substr(47, 1);
-    }
-
     return sig;
 }
 
@@ -104,7 +88,7 @@ function parseStreamMap(html) {
         var tag = s.match(/itag=(\d{0,2})/)[1],
             url = s.match(/url=(.*?)(\\u0026|$)/)[1],
             sig = s.match(/[sig|s]=([A-Z0-9]*\.[A-Z0-9]*(?:\.[A-Z0-9]*)?)/)[1];
-        if (sig.length > 81) {
+        if (s.indexOf("sig") === -1) {
             sig = decryptSignature(sig);
         }
         if (quality.hasOwnProperty(tag)) {
