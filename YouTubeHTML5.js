@@ -4,24 +4,23 @@
 "use strict";
 
 // wiki/YouTube#Quality_and_codecs
-var quality = {
-    18: {type: "video/mp4",  label: "MP4 360p"  },
-    22: {type: "video/mp4",  label: "MP4 720p"  },
-    37: {type: "video/mp4",  label: "MP4 1080p" },
-    38: {type: "video/mp4",  label: "MP4 4K"    },
-    43: {type: "video/webm", label: "WebM 360p" },
-    44: {type: "video/webm", label: "WebM 480p" },
-    45: {type: "video/webm", label: "WebM 720p" },
-    46: {type: "video/webm", label: "WebM 1080p"},
-};
-
-var video;
-
-video = document.createElement("video");
-video.setAttribute("id", "crx-html5-video");
-video.setAttribute("controls", "");
-video.setAttribute("preload", "");
-video.setAttribute("autoplay", "");
+var quality = (function () {
+    var q = {},
+        v = document.createElement("video");
+    if (v.canPlayType("video/mp4")) {
+        q["18"] = "MP4 360p";
+        q["22"] = "MP4 720p";
+        q["37"] = "MP4 1080p";
+        q["38"] = "MP4 4K";
+    }
+    if (v.canPlayType("video/webm")) {
+        q["43"] = "WebM 360p";
+        q["44"] = "WebM 480p";
+        q["45"] = "WebM 720p";
+        q["46"] = "WebM 1080p";
+    }
+    return q;
+}());
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // YouTube Elements
@@ -38,33 +37,27 @@ function decryptSignature(sig) {
         return a;
     }
 
-    function isString(s) {
-        return (typeof s === "string" || s instanceof String);
+    function decode(sig, arr) {
+        try {
+            var s = sig.split(""),
+                r = null;
+            arr.forEach(function (n) {
+                if (n > 0) {
+                    swap(s, n);
+                } else {
+                    if (n === 0) {
+                        s.reverse();
+                    } else {
+                        s.splice(-n);
+                    }
+                }
+            });
+            r = s.join("");
+            return (r.length === 81) ? r : sig;
+        } catch (ignore) {}
     }
 
-    function isInteger(n) {
-        return (typeof n === "number" && n % 1 === 0);
-    }
-
-    function decode(sig, arr) { // encoded decryption
-        if (!isString(sig)) {
-            return null;
-        }
-        var sigA = sig.split(""), i, act, result;
-        for (i = 0; i < arr.length; i += 1) {
-            act = arr[i];
-            if (!isInteger(act)) {
-                return null;
-            }
-            sigA = (act > 0) ? swap(sigA, act) : ((act === 0) ? sigA.reverse() : sigA.slice(-act));
-        }
-        result = sigA.join("");
-        return (result.length === 81) ? result : sig;
-    }
-
-    var decodeArray, arr;
-
-    decodeArray = {
+    var decodeArray = {
         92: [-2, 0, -3, 9, -3, 43, -3, 0, 23],
         88: [-2, 1, 10, 0, -2, 23, -3, 15, 34],
         87: [-3, 0, 63, -2, 0, -1],
@@ -73,10 +66,8 @@ function decryptSignature(sig) {
         81: [34, 29, 9, 0, 39, 24]
     };
 
-    arr = decodeArray[sig.length];
-
-    if (arr !== null) {
-        sig = decode(sig, arr);
+    if (decodeArray[sig.length] !== null) {
+        sig = decode(sig, decodeArray[sig.length]);
     }
 
     return sig;
@@ -88,15 +79,11 @@ function parseStreamMap(html) {
         var tag = s.match(/itag=(\d{0,2})/)[1],
             url = s.match(/url=(.*?)(\\u0026|$)/)[1],
             sig = s.match(/[sig|s]=([A-Z0-9]*\.[A-Z0-9]*(?:\.[A-Z0-9]*)?)/)[1];
-        if (s.indexOf("sig") === -1) {
+        if (s.indexOf("sig=") === -1) {
             sig = decryptSignature(sig);
         }
         if (quality.hasOwnProperty(tag)) {
-            if (video.canPlayType(quality[tag].type)) {
-                streamMap[tag] = decodeURIComponent(url) + "&signature=" + sig;
-            } else {
-                delete quality[tag];
-            }
+            streamMap[tag] = decodeURIComponent(url) + "&signature=" + sig;
         }
     });
     return streamMap;
@@ -188,6 +175,18 @@ var state = (function () {
 }());
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Video
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+var video;
+
+video = document.createElement("video");
+video.setAttribute("id", "crx-html5-video");
+video.setAttribute("controls", "");
+video.setAttribute("preload", "");
+video.setAttribute("autoplay", "");
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Video Events
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -272,11 +271,13 @@ video.addEventListener("ended", function () {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 var html5;
+
 html5 = document.createElement("div");
 html5.setAttribute("id", "crx-html5-player");
 html5.classList.add("player-height");
 html5.classList.add("player-width");
 html5.classList.add("off-screen-target");
+html5.classList.add("watch-content");
 html5.appendChild(video);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -304,7 +305,7 @@ Object.keys(youtube.source).forEach(function (k) {
         o.setAttribute("selected", "");
     }
     o.setAttribute("value", k);
-    o.textContent = quality[k].label;
+    o.textContent = quality[k];
     format.appendChild(o);
 });
 
@@ -397,6 +398,7 @@ function toggleSize() {
         embiggen.setAttribute("title", chrome.i18n.getMessage("embiggen"));
         youtube.container.classList.remove("watch-wide");
         youtube.player.classList.remove("watch-medium");
+        youtube.player.classList.remove("watch-large");
         youtube.player.classList.remove("watch-playlist-collapsed");
     }
 }
