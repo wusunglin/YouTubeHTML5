@@ -42,14 +42,13 @@ function decryptSignature(sig) {
             var s = sig.split(""),
                 r = null;
             arr.forEach(function (n) {
+                if (n % 1 !== 0) {
+                    return null;
+                }
                 if (n > 0) {
-                    swap(s, n);
+                    s = swap(s, n);
                 } else {
-                    if (n === 0) {
-                        s.reverse();
-                    } else {
-                        s.splice(-n);
-                    }
+                    s = (n === 0) ? s.reverse() : s.slice(-n);
                 }
             });
             r = s.join("");
@@ -61,12 +60,13 @@ function decryptSignature(sig) {
         92: [-2, 0, -3, 9, -3, 43, -3, 0, 23],
         88: [-2, 1, 10, 0, -2, 23, -3, 15, 34],
         87: [-3, 0, 63, -2, 0, -1],
+        86: [-2, 0, 39, 55, 49, -3, 56, 2],
         85: [0, -2, 17, 61, 0, -1, 7, -1],
         83: [24, 53, -2, 31, 4],
         81: [34, 29, 9, 0, 39, 24]
     };
 
-    if (decodeArray[sig.length] !== null) {
+    if (decodeArray.hasOwnProperty(sig.length)) {
         sig = decode(sig, decodeArray[sig.length]);
     }
 
