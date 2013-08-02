@@ -26,7 +26,7 @@ var quality = (function () {
 // YouTube Elements
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// credit: http://userscripts.org/scripts/show/25105 v1.7.5
+// credit: http://userscripts.org/scripts/show/25105
 
 function decryptSignature(sig) {
 
@@ -62,7 +62,7 @@ function decryptSignature(sig) {
         87: [-3, 0, 63, -2, 0, -1],
         86: [-2, 0, 39, 55, 49, -3, 56, 2],
         85: [0, -2, 17, 61, 0, -1, 7, -1],
-        83: [24, 53, -2, 31, 4],
+        83: [0, -2, 65, 0],
         81: [34, 29, 9, 0, 39, 24]
     };
 
