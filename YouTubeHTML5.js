@@ -28,49 +28,23 @@ var quality = (function () {
 
 // credit: http://userscripts.org/scripts/show/25105
 
-function decryptSignature(sig) {
+// script = document.body.innerHTML.match(/"js":\s"([^"]+)"/)[1];
+// XHR script onload
+//   tx = document.body.textContent;
+//   nm = tx.match(/\.signature=(\w+)\(/)[1];
+//   rg = new RegExp('function\\s' + nm + '\\((.*?)\\)({[^}]+});', "i");
+//   fn = tx.match(rg);
+//   console.log("function decryptSignature(" + fn[1] + ") " + fn[2] + ";");
 
-    function swap(a, b) {
-        var c = a[0];
-        a[0] = a[b % a.length];
-        a[b] = c;
-        return a;
-    }
-
-    function decode(sig, arr) {
-        try {
-            var s = sig.split(""),
-                r = null;
-            arr.forEach(function (n) {
-                if (n % 1 !== 0) {
-                    return null;
-                }
-                if (n > 0) {
-                    s = swap(s, n);
-                } else {
-                    s = (n === 0) ? s.reverse() : s.slice(-n);
-                }
-            });
-            r = s.join("");
-            return (r.length === 81) ? r : sig;
-        } catch (ignore) {}
-    }
-
-    var decodeArray = {
-        92: [-2, 0, -3, 9, -3, 43, -3, 0, 23],
-        88: [-2, 1, 10, 0, -2, 23, -3, 15, 34],
-        87: [-3, 0, 63, -2, 0, -1],
-        86: [-2, 0, 39, 55, 49, -3, 56, 2],
-        85: [0, -2, 17, 61, 0, -1, 7, -1],
-        83: [0, -2, 65, 0],
-        81: [34, 29, 9, 0, 39, 24]
-    };
-
-    if (decodeArray.hasOwnProperty(sig.length)) {
-        sig = decode(sig, decodeArray[sig.length]);
-    }
-
-    return sig;
+function decryptSignature(a) {
+    a = a.split("");
+    a = a.reverse();
+    a = a.slice(2);
+    var b = a[0];
+    a[0] = a[65 % a.length];
+    a[65] = b;
+    a = a.reverse();
+    return a.join("");
 }
 
 function parseStreamMap(html) {
