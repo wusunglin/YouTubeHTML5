@@ -38,11 +38,10 @@ var quality = (function () {
 
 function decryptSignature(a) {
     a = a.split("");
-    a = a.reverse();
-    a = a.slice(2);
+    a = a.slice(3);
     var b = a[0];
-    a[0] = a[65 % a.length];
-    a[65] = b;
+    a[0] = a[24 % a.length];
+    a[24] = b;
     a = a.reverse();
     return a.join("");
 }
