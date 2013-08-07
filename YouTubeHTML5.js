@@ -31,7 +31,7 @@ function decryptSignature(a) {
         var c = a[0];
         a[0] = a[b % a.length];
         a[b] = c;
-        return a
+        return a;
     }
     a = a.split("");
     a = jj(a, 10);
@@ -43,8 +43,8 @@ function decryptSignature(a) {
     a = a.slice(3);
     a = jj(a, 50);
     a = a.reverse();
-    return a.join("")
-};
+    return a.join("");
+}
 
 function parseStreamMap(html) {
     var streamMap = {};
