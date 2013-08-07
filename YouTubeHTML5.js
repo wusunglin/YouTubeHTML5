@@ -26,25 +26,25 @@ var quality = (function () {
 // YouTube Elements
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// credit: http://userscripts.org/scripts/show/25105
-
-// script = document.body.innerHTML.match(/"js":\s"([^"]+)"/)[1];
-// XHR script onload
-//   tx = document.body.textContent;
-//   nm = tx.match(/\.signature=(\w+)\(/)[1];
-//   rg = new RegExp('function\\s' + nm + '\\((.*?)\\)({[^}]+});', "i");
-//   fn = tx.match(rg);
-//   console.log("function decryptSignature(" + fn[1] + ") " + fn[2] + ";");
-
 function decryptSignature(a) {
+    function jj(a, b) {
+        var c = a[0];
+        a[0] = a[b % a.length];
+        a[b] = c;
+        return a
+    }
     a = a.split("");
-    a = a.slice(3);
-    var b = a[0];
-    a[0] = a[24 % a.length];
-    a[24] = b;
+    a = jj(a, 10);
     a = a.reverse();
-    return a.join("");
-}
+    a = a.slice(1);
+    a = jj(a, 45);
+    a = a.slice(2);
+    a = a.reverse();
+    a = a.slice(3);
+    a = jj(a, 50);
+    a = a.reverse();
+    return a.join("")
+};
 
 function parseStreamMap(html) {
     var streamMap = {};
