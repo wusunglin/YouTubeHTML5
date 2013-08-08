@@ -27,22 +27,12 @@ var quality = (function () {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function decryptSignature(a) {
-    function jj(a, b) {
-        var c = a[0];
-        a[0] = a[b % a.length];
-        a[b] = c;
-        return a;
-    }
     a = a.split("");
-    a = jj(a, 10);
-    a = a.reverse();
-    a = a.slice(1);
-    a = jj(a, 45);
     a = a.slice(2);
-    a = a.reverse();
+    var b = a[0];
+    a[0] = a[18 % a.length];
+    a[18] = b;
     a = a.slice(3);
-    a = jj(a, 50);
-    a = a.reverse();
     return a.join("");
 }
 
