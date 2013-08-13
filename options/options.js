@@ -3,16 +3,30 @@
 
 "use strict";
 
-var enabled  = document.getElementById("enabled"),
-    autoplay = document.getElementById("autoplay"),
-    embiggen = document.getElementById("embiggen"),
-    space    = document.getElementById("space"),
-    mp4      = document.getElementById("mp4"),
-    webm     = document.getElementById("webm"),
-    f360     = document.getElementById("f360"),
-    f480     = document.getElementById("f480"),
-    f720     = document.getElementById("f720"),
-    f1080    = document.getElementById("f1080");
+var title = chrome.i18n.getMessage("options");
+
+if (title) {
+    document.title = title;
+}
+
+[].forEach.call(document.querySelectorAll("*[data-i18n]"), function (el) {
+    var m = chrome.i18n.getMessage(el.dataset.i18n);
+    if (m) {
+        el.textContent = m;
+    }
+});
+
+var enabled    = document.getElementById("enabled"),
+    autoplay   = document.getElementById("autoplay"),
+    embiggen   = document.getElementById("embiggen"),
+    space      = document.getElementById("space"),
+    prioritise = document.getElementById("prioritise"),
+    mp4        = document.getElementById("mp4"),
+    webm       = document.getElementById("webm"),
+    f360       = document.getElementById("f360"),
+    f480       = document.getElementById("f480"),
+    f720       = document.getElementById("f720"),
+    f1080      = document.getElementById("f1080");
 
 enabled.addEventListener("change", function () {
     chrome.storage.local.set({"enabled": this.checked});
@@ -28,6 +42,10 @@ embiggen.addEventListener("change", function () {
 
 space.addEventListener("change", function () {
     chrome.storage.local.set({"space": this.checked});
+});
+
+prioritise.addEventListener("change", function () {
+    chrome.storage.local.set({"prioritise": this.checked});
 });
 
 function format() {
@@ -73,6 +91,10 @@ chrome.storage.local.get(null, function (options) {
 
     if (typeof options.space === "boolean") {
         space.checked = options.space;
+    }
+
+    if (typeof options.prioritise === "boolean") {
+        prioritise.checked = options.prioritise;
     }
 
     switch (options.format) {

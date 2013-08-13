@@ -5,18 +5,19 @@
     "default_locale": "en",
     "name": "__MSG_ext_name__",
     "description": "__MSG_ext_description__",
-    "version": "0.3.16",
+    "version": "0.4",
     "icons": {
         "128": "128.png",
          "48": "48.png",
          "16": "16.png"
     },
     "permissions": [
-        "storage"
+        "storage",
+        "https://*.ytimg.com/*"
     ],
     "content_scripts": [{
         "matches": [
-            "*://*.youtube.com/watch*"
+            "*://*.youtube.com/*"
         ],
         "css": [
             "YouTubeHTML5.css"
