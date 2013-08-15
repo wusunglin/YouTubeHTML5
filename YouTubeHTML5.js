@@ -107,8 +107,8 @@ function main() {
 
     yt_container = document.querySelector("#watch7-container");
     yt_content   = document.querySelector("#watch7-content");
-    yt_watch     = document.querySelector("#player");
-    yt_player    = document.querySelector("#player-api");
+    yt_watch     = document.querySelector("#player-legacy");
+    yt_player    = document.querySelector("#player-api-legacy");
     yt_next      = document.querySelector("#watch7-playlist-bar-next-button");
     yt_auto      = document.querySelector("#watch7-playlist-bar-autoplay-button");
 
@@ -443,7 +443,7 @@ function main() {
         // (bool)   embiggen   = embiggen video player
         // (bool)   enabled    = auto switch to html5 video
 
-        var script, xhr, observer;
+        var script, xhr, observer, ythtml5video;
 
         // Keyboard controls //////////////////////////////////////////////////////////////////////////////////////////
 
@@ -599,24 +599,29 @@ function main() {
         // Auto swap //////////////////////////////////////////////////////////////////////////////////////////////////
 
         if (options.enabled === true) {
-            observer = new MutationObserver(function (mutations) {
-                mutations.some(function () {
-                    var v = yt_player.querySelector("video");
-                    if (v) {
-                        v.addEventListener("timeupdate", function () {
-                            if (!document.contains(this)) {
-                                this.pause();
-                            }
-                        });
-                        observer.disconnect();
-                        return true;
-                    }
-                });
+
+            // temp fix
+            observer = new MutationObserver(function () {
+                var v = document.querySelector("#player video");
+                if (v) {
+                    v.setAttribute("src", "");
+                }
             });
-            observer.observe(yt_player, {
+            observer.observe(document.body, {
                 subtree: true,
                 childList: true
             });
+
+            ythtml5video = document.querySelector("#content video");
+
+            if (ythtml5video) {
+                ythtml5video.addEventListener("timeupdate", function () {
+                    if (!document.contains(this)) {
+                        this.pause();
+                    }
+                });
+            }
+
             togglePlayer();
         }
 
