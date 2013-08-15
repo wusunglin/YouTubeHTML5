@@ -1,7 +1,7 @@
 /*jslint browser: true, es5: true, indent: 4, regexp: true, evil: true */
 /*global chrome, MutationObserver */
 
-function init() {
+function main() {
 
     "use strict";
 
@@ -430,7 +430,7 @@ function init() {
     // Options
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    function getOptions(options) {
+    function init(options) {
 
         // (bool)   space      = use shift+space to play/pause video
         // (bool)   prioritise = Prioritise quaility over codec
@@ -461,26 +461,19 @@ function init() {
 
         // Preferred format ///////////////////////////////////////////////////////////////////////////////////////////
 
-        function best(a, b, c) {
-            if (source.hasOwnProperty(a) || source.hasOwnProperty(b)) {
-                return source.hasOwnProperty(a) ? a : b;
-            }
-            return c;
-        }
-
         if (typeof options.format === "string") {
             if (options.prioritise) {
                 // 1080p
                 if (options.format === "37" || options.format === "46") {
-                    options.format = best("37", "46", "22");
+                    options.format = source.hasOwnProperty("37") ? "37" : source.hasOwnProperty("46") ? "46" : "22";
                 }
                 // 720p
                 if (options.format === "22" || options.format === "45") {
-                    options.format = best("22", "45", "44");
+                    options.format = source.hasOwnProperty("22") ? "22" : source.hasOwnProperty("45") ? "45" : "44";
                 }
                 // SD
                 if (options.format === "44" || options.format === "18") {
-                    options.format = best("44", "18", "43");
+                    options.format = source.hasOwnProperty("44") ? "44" : source.hasOwnProperty("18") ? "18" : "43";
                 }
             } else {
                 // MP4
@@ -495,9 +488,8 @@ function init() {
                     if (options.format === "44" && !source.hasOwnProperty(options.format)) { options.format = "43"; }
                 }
             }
+            state.format = options.format;
         }
-
-        state.format = options.format;
 
         [].slice.call(format.options).some(function (o) {
             if (o.value === state.format) {
@@ -630,7 +622,7 @@ function init() {
 
     yt_content.insertBefore(toolbar, yt_content.firstElementChild);
 
-    chrome.storage.local.get(null, getOptions);
+    chrome.storage.local.get(null, init);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -648,7 +640,7 @@ if (/class[\w\s"'-=]+spf\-link/.test(youtube_container.innerHTML)) {
             if (mutation.addedNodes.length) {
                 [].some.call(mutation.addedNodes, function (node) {
                     if (node.id === "watch7-container") {
-                        init();
+                        main();
                         return true;
                     }
                 });
@@ -662,5 +654,5 @@ if (/class[\w\s"'-=]+spf\-link/.test(youtube_container.innerHTML)) {
 }
 
 if (/^https?:\/\/www\.youtube.com\/watch\?/.test(window.location.href)) {
-    init();
+    main();
 }
