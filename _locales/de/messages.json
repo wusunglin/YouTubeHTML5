@@ -1,0 +1,62 @@
+{
+    "ext_name": {
+        "message": "HTML5 Video für YouTube\u2122"
+    },
+    "ext_description": {
+        "message": "Verwende Chrome's Standard HTML5-Player auf YouTube\u2122"
+    },
+    "enable": {
+        "message": "Aktivieren"
+    },
+    "disable": {
+        "message": "Deaktivieren"
+    },
+    "quality": {
+        "message": "Qualität"
+    },
+    "speed": {
+        "message": "Geschwindigkeit"
+    },
+    "embiggen": {
+        "message": "Vergrößern"
+    },
+    "shrink": {
+        "message": "Verkleinern"
+    },
+    "download": {
+        "message": "Download"
+    },
+    "reload": {
+        "message": "Neu laden"
+    },
+    "options": {
+        "message": "Optionen"
+    },
+    "option_enabled": {
+        "message": "HTML5 Video automatisch benutzen"
+    },
+    "option_autoplay": {
+        "message": "Autoplay"
+    },
+    "option_embiggen": {
+        "message": "Großer Player"
+    },
+    "option_space": {
+        "message": "Play/Pause mit Umschalt + Leertaste"
+    },
+    "option_prioritise": {
+        "message": "Bevorzugte Qualität vor Codec"
+    },
+    "option_codec": {
+        "message": "Bevorzugter Codec"
+    },
+    "option_quality": {
+        "message": "Bevorzugte Qualität"
+    },
+    "option_feedback": {
+        "message": "Bugs, Fragen und Vorschläge für neue Funktionen"
+    },
+    "option_source": {
+        "message": "Downloade dir den Quellcode auf GitHub"
+    }
+}
