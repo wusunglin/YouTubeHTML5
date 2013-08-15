@@ -465,15 +465,25 @@ function main() {
             if (options.prioritise) {
                 // 1080p
                 if (options.format === "37" || options.format === "46") {
-                    options.format = source.hasOwnProperty("37") ? "37" : source.hasOwnProperty("46") ? "46" : "22";
+                    if (options.format === "37") {
+                        options.format = source.hasOwnProperty("37") ? "37" : source.hasOwnProperty("46") ? "46" : "22";
+                    } else {
+                        options.format = source.hasOwnProperty("46") ? "46" : source.hasOwnProperty("37") ? "37" : "45";
+                    }
                 }
                 // 720p
                 if (options.format === "22" || options.format === "45") {
-                    options.format = source.hasOwnProperty("22") ? "22" : source.hasOwnProperty("45") ? "45" : "44";
+                    if (options.format === "22") {
+                        options.format = source.hasOwnProperty("22") ? "22" : source.hasOwnProperty("45") ? "45" : "44";
+                    } else {
+                        options.format = source.hasOwnProperty("45") ? "45" : source.hasOwnProperty("22") ? "22" : "44";
+                    }
                 }
                 // SD
                 if (options.format === "44" || options.format === "18") {
-                    options.format = source.hasOwnProperty("44") ? "44" : source.hasOwnProperty("18") ? "18" : "43";
+                    if (options.format === "44") {
+                        options.format = source.hasOwnProperty("44") ? "44" : source.hasOwnProperty("18") ? "18" : "43";
+                    }
                 }
             } else {
                 // MP4
