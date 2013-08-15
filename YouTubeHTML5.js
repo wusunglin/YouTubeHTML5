@@ -481,7 +481,9 @@ function main() {
                 }
                 // SD
                 if (options.format === "44" || options.format === "18") {
-                    options.format = source.hasOwnProperty("44") ? "44" : source.hasOwnProperty("18") ? "18" : "43";
+                    if (options.format === "44") {
+                        options.format = source.hasOwnProperty("44") ? "44" : source.hasOwnProperty("18") ? "18" : "43";
+                    }
                 }
             } else {
                 // MP4
