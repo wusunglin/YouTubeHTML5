@@ -107,8 +107,8 @@ function main() {
 
     yt_container = document.querySelector("#watch7-container");
     yt_content   = document.querySelector("#watch7-content");
-    yt_watch     = document.querySelector("#player-legacy");
-    yt_player    = document.querySelector("#player-api-legacy");
+    yt_player    = document.querySelector("#movie_player").parentNode;
+    yt_watch     = yt_player.parentNode;
     yt_next      = document.querySelector("#watch7-playlist-bar-next-button");
     yt_auto      = document.querySelector("#watch7-playlist-bar-autoplay-button");
 
