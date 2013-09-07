@@ -1,0 +1,62 @@
+{
+    "ext_name": {
+        "message": "HTML5 Video for YouTube\u2122"
+    },
+    "ext_description": {
+        "message": "Använd Chromes standard HTML5 video spelare på YouTube\u2122"
+    },
+    "enable": {
+        "message": "Aktivera"
+    },
+    "disable": {
+        "message": "Inaktivera"
+    },
+    "quality": {
+        "message": "Kvalitet"
+    },
+    "speed": {
+        "message": "Hastighet"
+    },
+    "embiggen": {
+        "message": "Förstora"
+    },
+    "shrink": {
+        "message": "Förminska"
+    },
+    "download": {
+        "message": "Ladda ner"
+    },
+    "reload": {
+        "message": "Ladda om"
+    },
+    "options": {
+        "message": "Alternativ"
+    },
+    "option_enabled": {
+        "message": "Använd HTML5 video automatiskt"
+    },
+    "option_autoplay": {
+        "message": "Spela upp automatiskt"
+    },
+    "option_embiggen": {
+        "message": "Förstora spelaren"
+    },
+    "option_space": {
+        "message": "Spela/pausa med Shift + Space"
+    },
+    "option_prioritise": {
+        "message": "Prioritera kvalitet över kodek"
+    },
+    "option_codec": {
+        "message": "Föredragen kodek"
+    },
+    "option_quality": {
+        "message": "Föredragen kvalitet"
+    },
+    "option_feedback": {
+        "message": "Buggar, frågor och funktions förslag"
+    },
+    "option_source": {
+        "message": "Hämta källkoden på GitHub"
+    }
+}
