@@ -1,0 +1,62 @@
+{
+    "ext_name": {
+        "message": "HTML5 Video para YouTube\u2122"
+    },
+    "ext_description": {
+        "message": "Usar reprodutor de vídeo HTML5 padrão do Chrome no YouTube\u2122"
+    },
+    "enable": {
+        "message": "Habilitar"
+    },
+    "disable": {
+        "message": "Desabilitar"
+    },
+    "quality": {
+        "message": "Qualidade"
+    },
+    "speed": {
+        "message": "Velocidade"
+    },
+    "embiggen": {
+        "message": "Aumentar"
+    },
+    "shrink": {
+        "message": "Reduzir"
+    },
+    "download": {
+        "message": "Download"
+    },
+    "reload": {
+        "message": "Recarregar"
+    },
+    "options": {
+        "message": "Opções"
+    },
+    "option_enabled": {
+        "message": "Usar vídeo HTML5 automaticamente"
+    },
+    "option_autoplay": {
+        "message": "Autoreproduzir"
+    },
+    "option_embiggen": {
+        "message": "Aumentar reprodutor"
+    },
+    "option_space": {
+        "message": "Reproduzir/pausar usando Shift + Espaço"
+    },
+    "option_prioritise": {
+        "message": "Priorizar qualidade sobre codec"
+    },
+    "option_codec": {
+        "message": "Codec preferencial"
+    },
+    "option_quality": {
+        "message": "Qualidade preferencial"
+    },
+    "option_feedback": {
+        "message": "Problemas, perguntas e sugestões de funcionalidades"
+    },
+    "option_source": {
+        "message": "Acesse o código-fonte no GitHub"
+    }
+}
