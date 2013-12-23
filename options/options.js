@@ -16,9 +16,12 @@ var enabled    = document.getElementById("enabled"),
     embiggen   = document.getElementById("embiggen"),
     audio      = document.getElementById("audio"),
     space      = document.getElementById("space"),
-    codec      = document.getElementById("codec");
+    codec      = document.getElementById("codec"),
+    rate       = document.getElementById("rate");
 
 codec.selectedIndex = -1;
+
+rate.selectedIndex = -1;
 
 enabled.addEventListener("change", function () {
     chrome.storage.local.set({"enabled": this.checked});
@@ -46,6 +49,10 @@ space.addEventListener("change", function () {
 
 codec.addEventListener("change", function () {
     chrome.storage.local.set({"codec": this.value});
+});
+
+rate.addEventListener("change", function () {
+    chrome.storage.local.set({"rate": this.value});
 });
 
 chrome.storage.local.get(null, function (options) {
@@ -84,6 +91,14 @@ chrome.storage.local.get(null, function (options) {
     if (typeof options.codec === "string") {
         Array.prototype.some.call(codec.options, function (o) {
             if (o.value === options.codec) {
+                o.selected = true;
+                return true;
+            }
+        });
+    }
+    if (typeof options.rate === "string") {
+        Array.prototype.some.call(rate.options, function (o) {
+            if (o.value === options.rate) {
                 o.selected = true;
                 return true;
             }

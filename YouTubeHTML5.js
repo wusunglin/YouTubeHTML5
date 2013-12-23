@@ -172,7 +172,7 @@ HTML5_VIDEO.addEventListener("error", function (e) {
 });
 */
 
-// option.keyboard: document.addEventListener "keydown"
+// option.space: document.addEventListener "keydown"
 function videoKeyboardControls(e) {
     if (e.shiftKey && e.keyCode === 32) { // [space]
         if (HTML5_VIDEO.paused || HTML5_VIDEO.ended) {
@@ -200,7 +200,7 @@ function videoPauseIfHidden(e) {
     }
 }
 
-// option.sound: HTML5_VIDEO.addEventListener "volumechange"
+// option.audio: HTML5_VIDEO.addEventListener "volumechange"
 function videoVolumeChange() {
     chrome.storage.local.set({"muted": this.muted});
     chrome.storage.local.set({"volume": this.volume});
@@ -533,7 +533,7 @@ function init(streamMap) {
             }
 
             if (typeof options.autoplay === "boolean") {
-                HTML5_VIDEO.autoplay = options.autoplay;
+                HTML5_VIDEO.autoplay = !options.autoplay;
             }
 
             if (typeof options.codec === "string") {
@@ -541,6 +541,18 @@ function init(streamMap) {
                     if (o.dataset.itag === options.codec) {
                         o.selected = true;
                         HTML5_VIDEO.src = o.value;
+                        return true;
+                    }
+                });
+            }
+
+            if (typeof options.rate === "string") {
+                Array.prototype.some.call(UI_RATE_SELECT.options, function (o) {
+                    if (o.value === options.rate) {
+                        o.selected = true;
+                        STATE_VIDEO_RATE = parseFloat(o.value) || 1;
+                        HTML5_VIDEO.playbackRate = STATE_VIDEO_RATE;
+                        UI_SPEED_CHECKBOX.checked = true;
                         return true;
                     }
                 });
