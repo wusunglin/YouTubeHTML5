@@ -1,7 +1,7 @@
 HTML5 Video Player for YouTube&trade;
 =====================================
 
-This is a simple extension that swaps YouTube's Flash or HTML5 video player with the default one built into Chrome.
+A simple Chrome extension that gives you the option to use the default HTML5 video player on YouTube.
 
 [Available on the Chrome Web Store](https://chrome.google.com/webstore/detail/dolajcekhnohkpncmhgledbmndjpblei)
 

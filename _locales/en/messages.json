@@ -1,36 +1,44 @@
 {
     "ext_name": {
-        "message": "HTML5 Video for YouTube\u2122"
+        "message": "HTML5 video for YouTube\u2122"
     },
     "ext_description": {
-        "message": "Use Chrome's default HTML5 video player on YouTube\u2122"
+        "message": "TODO"
     },
-    "enable": {
-        "message": "Enable"
+    "toggle_unchecked": {
+        "message": "Enable HTML5 video"
     },
-    "disable": {
-        "message": "Disable"
+    "toggle_checked": {
+        "message": "Disable HTML5 video"
     },
-    "quality": {
-        "message": "Quality"
+    "toggle_disabled": {
+        "message": "HTML5 video disabled"
     },
-    "speed": {
-        "message": "Speed"
-    },
-    "embiggen": {
-        "message": "Embiggen"
-    },
-    "shrink": {
-        "message": "Shrink"
-    },
-    "download": {
-        "message": "Download"
+    "source": {
+        "message": "Change video source"
     },
     "reload": {
         "message": "Reload"
     },
-    "options": {
-        "message": "Options"
+    "download": {
+        "message": "Download"
+    },
+    "speed_unchecked": {
+        "message": "Change playback rate"
+    },
+    "speed_checked": {
+        "message": "Reset playback rate"
+    },
+    "rate": {
+        "message": "Playback rate"
+    },
+    "size_unchecked": {
+        "message": "Embiggen",
+        "description": "Increase player size"
+    },
+    "size_checked": {
+        "message": "Shrink",
+        "description": "Decrease player size"
     },
     "option_enabled": {
         "message": "Automatically use HTML5 video"
@@ -38,23 +46,23 @@
     "option_autoplay": {
         "message": "Autoplay"
     },
+    "option_visibility": {
+        "message": "Disable autoplay for background tabs"
+    },
     "option_embiggen": {
         "message": "Embiggen player"
     },
-    "option_space": {
-        "message": "Play/pause using Shift + Space"
+    "option_audio": {
+        "message": "Remember audio settings"
     },
-    "option_prioritise": {
-        "message": "Prioritise quality over codec"
+    "option_space": {
+        "message": "Play/Pause using [SHIFT] + [SPACE]"
     },
     "option_codec": {
         "message": "Preferred codec"
     },
-    "option_quality": {
-        "message": "Preferred quality"
-    },
     "option_feedback": {
-        "message": "Bugs, questions and feature suggestions"
+        "message": "Questions, bugs and feature suggestions"
     },
     "option_source": {
         "message": "Get the source code on GitHub"

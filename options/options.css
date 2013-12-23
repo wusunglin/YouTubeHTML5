@@ -1,55 +1,33 @@
-* {
-    border: none;
-    margin: 0;
-    padding: 0;
-}
-
 html {
-    background: #f1f1f1;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-flex-direction: column;
-    flex-direction: column;
-    -webkit-align-items: center;
     align-items: center;
+    background: #f1f1f1;
+    display: flex;
+    flex-direction: column;
 }
 
 body {
     direction: __MSG_@@bidi_dir__;
-    font: 12px/18px "Segoe UI", Tahoma, sans-serif;
-    margin: 8px;
-}
-section {
-    background: #fff;
-    padding: 12px 20px;
-    margin-bottom: 8px;
-}
-
-div {
-    display: -webkit-flex;
-    display: flex;
-    -webkit-align-items: center;
-    align-items: center;
-    padding: 8px 0;
+    font: 12px/20px "Segoe UI", Tahoma, sans-serif;
+    margin: 12px;
 }
 
 h1 {
-    background: #fff url("chrome-extension://__MSG_@@extension_id__/48.png") __MSG_@@bidi_start_edge__ center / 24px no-repeat;
-    background-origin: content-box;
-    border-bottom: 1px solid #f1f1f1;
-    font-size: 1.4em;
+    background: #cd201f;
+    color: #fff;
+    font-size: 14px;
     font-weight: normal;
-    padding: 16px;
-    text-indent: 32px;
+    margin: 0;
+    padding: 12px;
 }
 
 h2 {
-    font-size: 1.1em;
-    margin-top: 12px;
+    font-size: 12px;
+    line-height: 1em;
+    margin: 1em 0;
 }
 
 a {
-    color: #4183C4;
+    color: #15C;
     text-decoration: none;
 }
 
@@ -57,7 +35,23 @@ a:hover {
     text-decoration: underline;
 }
 
-label {
-    cursor: pointer;
-    padding: 0 12px 0 8px;
+a:active {
+    color: #052577;
 }
+
+input[type="checkbox"] {
+    margin-__MSG_@@bidi_end_edge__: 8px;
+}
+
+section {
+    background: #fff;
+    margin-bottom: 8px;
+    padding: 12px;
+}
+
+    section > div {
+        align-items: center;
+        display: flex;
+        margin-__MSG_@@bidi_end_edge__: 16px;
+        padding: 4px 0;
+    }
