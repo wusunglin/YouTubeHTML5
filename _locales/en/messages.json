@@ -33,12 +33,10 @@
         "message": "Playback rate"
     },
     "size_unchecked": {
-        "message": "Embiggen",
-        "description": "Increase player size"
+        "message": "Embiggen"
     },
     "size_checked": {
-        "message": "Shrink",
-        "description": "Decrease player size"
+        "message": "Shrink"
     },
     "option_enabled": {
         "message": "Automatically use HTML5 video"

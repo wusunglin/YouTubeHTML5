@@ -3,7 +3,7 @@
         "message": "HTML5 Video para YouTube\u2122"
     },
     "ext_description": {
-        "message": "Usar reprodutor de vÌdeo HTML5 padr„o do Chrome no YouTube\u2122"
+        "message": "Usar reprodutor de v√≠deo HTML5 padr√£o do Chrome no YouTube\u2122"
     },
     "enable": {
         "message": "Habilitar"
@@ -30,10 +30,10 @@
         "message": "Recarregar"
     },
     "options": {
-        "message": "OpÁıes"
+        "message": "Op√ß√µes"
     },
     "option_enabled": {
-        "message": "Usar vÌdeo HTML5 automaticamente"
+        "message": "Usar v√≠deo HTML5 automaticamente"
     },
     "option_autoplay": {
         "message": "Autoreproduzir"
@@ -42,7 +42,7 @@
         "message": "Aumentar reprodutor"
     },
     "option_space": {
-        "message": "Reproduzir/pausar usando Shift + EspaÁo"
+        "message": "Reproduzir/pausar usando Shift + Espa√ßo"
     },
     "option_prioritise": {
         "message": "Priorizar qualidade sobre codec"
@@ -54,9 +54,9 @@
         "message": "Qualidade preferencial"
     },
     "option_feedback": {
-        "message": "Problemas, perguntas e sugestıes de funcionalidades"
+        "message": "Problemas, perguntas e sugest√µes de funcionalidades"
     },
     "option_source": {
-        "message": "Acesse o cÛdigo-fonte no GitHub"
+        "message": "Acesse o c√≥digo-fonte no GitHub"
     }
 }

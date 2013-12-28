@@ -30,7 +30,7 @@
         "message": "Przeładuj"
     },
     "options": {
-            "message": "Opcje"
+        "message": "Opcje"
     },
     "option_enabled": {
         "message": "Automatycznie używaj odtwarzacza HTML 5"
