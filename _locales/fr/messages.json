@@ -12,7 +12,7 @@
         "message": "Désactiver le lecteur HTML5"
     },
     "toggle_disabled": {
-        "message": "Lecteur HTML5 désactivée"
+        "message": "Lecture en HTML5 bloquée"
     },
     "source": {
         "message": "Changer la source"
