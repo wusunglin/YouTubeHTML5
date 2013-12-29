@@ -1,49 +1,65 @@
 <!DOCTYPE html>
-<meta charset="UTF-8" />
-<title>{options}</title>
+<meta charset="UTF-8">
+<title data-i18n="ext_name">{ext_name}</title>
 <link rel="stylesheet" href="options.css">
 
 <h1 data-i18n="ext_name">{ext_name}</h1>
 
 <section id="options">
+
   <div>
-    <input id="enabled" type="checkbox" />
+    <input type="checkbox" id="enabled">
     <label for="enabled" data-i18n="option_enabled">{option_enabled}</label>
   </div>
+
   <div>
-    <input id="autoplay" type="checkbox" checked />
+    <input type="checkbox" id="autoplay">
     <label for="autoplay" data-i18n="option_autoplay">{option_autoplay}</label>
   </div>
+
   <div>
-    <input id="embiggen" type="checkbox" />
+    <input type="checkbox" id="visibility">
+    <label for="visibility" data-i18n="option_visibility">{option_visibility}</label>
+  </div>
+
+  <div>
+    <input type="checkbox" id="embiggen">
     <label for="embiggen" data-i18n="option_embiggen">{option_embiggen}</label>
   </div>
+
   <div>
-    <input id="space" type="checkbox" />
+    <input type="checkbox" id="audio">
+    <label for="audio" data-i18n="option_audio">{option_audio}</label>
+  </div>
+
+  <div>
+    <input type="checkbox" id="space">
     <label for="space" data-i18n="option_space">{option_space}</label>
   </div>
-  <div>
-    <input id="prioritise" type="checkbox" />
-    <label for="prioritise" data-i18n="option_prioritise">{option_prioritise}</label>
-  </div>
-  <h2 data-i18n="option_quality">{option_quality}</h2>
-  <div>
-    <input id="f360" type="radio" name="format" checked />
-    <label for="f360">360p</label>
-    <input id="f480" type="radio" name="format" />
-    <label for="f480">480p</label>
-    <input id="f720" type="radio" name="format" />
-    <label for="f720">720p</label>
-    <input id="f1080" type="radio" name="format" />
-    <label for="f1080">1080p</label>
-  </div>
+
   <h2 data-i18n="option_codec">{option_codec}</h2>
+
   <div>
-    <input id="mp4" type="radio" name="codec" checked />
-    <label for="mp4">MP4</label>
-    <input id="webm" type="radio" name="codec" />
-    <label for="webm">WebM</label>
+    <select id="codec">
+      <option value="18">MP4</option>
+      <option value="22">MP4 HD</option>
+      <option value="43">WebM</option>
+    </select>
   </div>
+
+  <h2 data-i18n="option_rate">{option_rate}</h2>
+
+  <div>
+    <select id="rate">
+      <option value="0.25">x0.25</option>
+      <option value="0.5">x0.5</option>
+      <option value="1">x1</option>
+      <option value="1.5">x1.5</option>
+      <option value="2">x2</option>
+      <option value="3">x3</option>
+    </select>
+  </div>
+
 </section>
 
 <section id="feedback">

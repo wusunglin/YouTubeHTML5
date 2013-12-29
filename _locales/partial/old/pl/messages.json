@@ -1,0 +1,62 @@
+{
+    "ext_name": {
+        "message": "HTML5 Wideo dla YouTube\u2122"
+    },
+    "ext_description": {
+        "message": "Zastosuj odtwarzacz wideo HTML5 domyślnym na Youtube\u2122"
+    },
+    "enable": {
+        "message": "Włącz"
+    },
+    "disable": {
+        "message": "Wyłącz"
+    },
+    "quality": {
+        "message": "Jakość"
+    },
+    "speed": {
+        "message": "Szybkość"
+    },
+    "embiggen": {
+        "message": "Powiększ"
+    },
+    "shrink": {
+        "message": "Zmniejsz"
+    },
+    "download": {
+        "message": "Pobierz"
+    },
+    "reload": {
+        "message": "Przeładuj"
+    },
+    "options": {
+        "message": "Opcje"
+    },
+    "option_enabled": {
+        "message": "Automatycznie używaj odtwarzacza HTML 5"
+    },
+    "option_autoplay": {
+        "message": "Autoplay"
+    },
+    "option_embiggen": {
+        "message": "Powiększony odtwarzacz"
+    },
+    "option_space": {
+        "message": "Play/pauza używając Shift + Spacja"
+    },
+    "option_prioritise": {
+        "message": "Priorytetowe jakości kodeku"
+    },
+    "option_codec": {
+        "message": "Preferowany kodec"
+    },
+    "option_quality": {
+        "message": "Preferowana jakość"
+    },
+    "option_feedback": {
+        "message": "Bugi, pytania i propozycje możliwości"
+    },
+    "option_source": {
+        "message": "Pobierz kod źródłowy z GitHub'a"
+    }
+}

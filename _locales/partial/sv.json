@@ -1,0 +1,94 @@
+{
+    "ext_name": {
+        "message": "HTML5 Video for YouTube\u2122",
+        "description": "HTML5 video for YouTube\u2122"
+    },
+    "ext_description": {
+        "message": "Använd Chromes standard HTML5 video spelare på YouTube\u2122",
+        "description": "Use the default HTML5 video player on YouTube\u2122"
+    },
+    "toggle_unchecked": {
+        "message": "Aktivera",
+        "description": "Enable HTML5 video"
+    },
+    "toggle_checked": {
+        "message": "Inaktivera",
+        "description": "Disable HTML5 video"
+    },
+    "toggle_disabled": {
+        "message": "",
+        "description": "HTML5 video disabled"
+    },
+    "source": {
+        "message": "",
+        "description": "Change video source"
+    },
+    "reload": {
+        "message": "Ladda om",
+        "description": "Reload"
+    },
+    "download": {
+        "message": "Ladda ner",
+        "description": "Download"
+    },
+    "speed_unchecked": {
+        "message": "",
+        "description": "Change playback rate"
+    },
+    "speed_checked": {
+        "message": "",
+        "description": "Reset playback rate"
+    },
+    "rate": {
+        "message": "",
+        "description": "Playback rate"
+    },
+    "size_unchecked": {
+        "message": "Förstora",
+        "description": "Increase player size"
+    },
+    "size_checked": {
+        "message": "Förminska",
+        "description": "Decrease player size"
+    },
+    "option_enabled": {
+        "message": "Använd HTML5 video automatiskt",
+        "description": "Automatically use HTML5 video"
+    },
+    "option_autoplay": {
+        "message": "",
+        "description": "Disable autoplay"
+    },
+    "option_visibility": {
+        "message": "",
+        "description": "Disable autoplay for background tabs"
+    },
+    "option_embiggen": {
+        "message": "Förstora spelaren",
+        "description": "Use bigger video player"
+    },
+    "option_audio": {
+        "message": "",
+        "description": "Remember audio settings"
+    },
+    "option_space": {
+        "message": "Spela/pausa med Shift + Space",
+        "description": "Play/Pause using [SHIFT] + [SPACE]"
+    },
+    "option_codec": {
+        "message": "Föredragen kodek",
+        "description": "Preferred codec"
+    },
+    "option_rate": {
+        "message": "",
+        "description": "Default playback rate"
+    },
+    "option_feedback": {
+        "message": "Buggar, frågor och funktions förslag",
+        "description": "Questions, bugs and feature suggestions"
+    },
+    "option_source": {
+        "message": "Hämta källkoden på GitHub",
+        "description": "Get the source code on GitHub"
+    }
+}

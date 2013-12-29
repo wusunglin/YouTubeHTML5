@@ -1,0 +1,62 @@
+{
+    "ext_name": {
+        "message": "HTML5 Video for YouTube\u2122"
+    },
+    "ext_description": {
+        "message": "Koristite Chromeov zadati HTML5 video player na YouTubeu."
+    },
+    "enable": {
+        "message": "Omogući"
+    },
+    "disable": {
+        "message": "Onemogući"
+    },
+    "quality": {
+        "message": "Kvaliteta"
+    },
+    "speed": {
+        "message": "Brzina"
+    },
+    "embiggen": {
+        "message": "Proširi"
+    },
+    "shrink": {
+        "message": "Skupi"
+    },
+    "download": {
+        "message": "Preuzmi"
+    },
+    "reload": {
+        "message": "Ponovno učitaj"
+    },
+    "options": {
+        "message": "Opcije"
+    },
+    "option_enabled": {
+        "message": "Automatski koristi HTML5 video"
+    },
+    "option_autoplay": {
+        "message": "Automatska reprodukcija"
+    },
+    "option_embiggen": {
+        "message": "Prošireni player"
+    },
+    "option_space": {
+        "message": "Pokreni/pauziraj s pomoću kombinacije Shift + Space"
+    },
+    "option_prioritise": {
+        "message": "Prednost ima kvaliteta nad kodekom"
+    },
+    "option_codec": {
+        "message": "Željeni kodek"
+    },
+    "option_quality": {
+        "message": "Željena kvaliteta"
+    },
+    "option_feedback": {
+        "message": "Prijava pogrešaka, prijedlozi o funkcijama i pitanja"
+    },
+    "option_source": {
+        "message": "Izvorni kôd na GitHubu"
+    }
+}
