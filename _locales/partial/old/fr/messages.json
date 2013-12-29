@@ -1,0 +1,62 @@
+{
+    "ext_name": {
+        "message": "Vidéos HTML5 pour Youtube\u2122"
+    },
+    "ext_description": {
+        "message": "Utilise le lecteur de vidéo HTML5 de Chrome par défaut sur Youtube\u2122"
+    },
+    "enable": {
+        "message": "Activer"
+    },
+    "disable": {
+        "message": "Désactiver"
+    },
+    "quality": {
+        "message": "Qualité"
+    },
+    "speed": {
+        "message": "Vitesse"
+    },
+    "embiggen": {
+        "message": "Grand lecteur"
+    },
+    "shrink": {
+        "message": "Petit lecteur"
+    },
+    "download": {
+        "message": "Télécharger"
+    },
+    "reload": {
+        "message": "Recharger la vidéo"
+    },
+    "options": {
+        "message": "Options"
+    },
+    "option_enabled": {
+        "message": "Utiliser automatiquement les vidéos HTML5"
+    },
+    "option_autoplay": {
+        "message": "Lecture automatique"
+    },
+    "option_embiggen": {
+        "message": "Utiliser le grand lecteur"
+    },
+    "option_space": {
+        "message": "Lecture/Pause avec Maj + Espace"
+    },
+    "option_prioritise": {
+        "message": "Préférer la qualité par rapport au codec"
+    },
+    "option_codec": {
+        "message": "Codec préféré"
+    },
+    "option_quality": {
+        "message": "Qualité préférée"
+    },
+    "option_feedback": {
+        "message": "Bugs, questions et suggestion de fonctionnalités"
+    },
+    "option_source": {
+        "message": "Voir le code source sur GitHub"
+    }
+}

@@ -1,0 +1,62 @@
+{
+    "ext_name": {
+        "message": "HTML5 Video for YouTube\u2122"
+    },
+    "ext_description": {
+        "message": "Користите Chrome-ов подразумевани HTML5 видео-плејер на YouTube-у."
+    },
+    "enable": {
+        "message": "Омогући"
+    },
+    "disable": {
+        "message": "Онемогући"
+    },
+    "quality": {
+        "message": "Квалитет"
+    },
+    "speed": {
+        "message": "Брзина"
+    },
+    "embiggen": {
+        "message": "Прошири"
+    },
+    "shrink": {
+        "message": "Скупи"
+    },
+    "download": {
+        "message": "Преузми"
+    },
+    "reload": {
+        "message": "Поново учитај"
+    },
+    "options": {
+        "message": "Опције"
+    },
+    "option_enabled": {
+        "message": "Аутоматски користи HTML5 видео"
+    },
+    "option_autoplay": {
+        "message": "Аутоматска репродукција"
+    },
+    "option_embiggen": {
+        "message": "Проширени плејер"
+    },
+    "option_space": {
+        "message": "Пусти/паузирај помоћу комбинације Shift + Space"
+    },
+    "option_prioritise": {
+        "message": "Предност има квалитет над кодеком"
+    },
+    "option_codec": {
+        "message": "Жељени кодек"
+    },
+    "option_quality": {
+        "message": "Жељени квалитет"
+    },
+    "option_feedback": {
+        "message": "Пријава грешака, предлози о функцијама и питања"
+    },
+    "option_source": {
+        "message": "Изворни кôд на GitHub-у"
+    }
+}
