@@ -1,0 +1,73 @@
+{
+    "ext_name": {
+        "message": "Vidéos HTML5 pour Youtube\u2122"
+    },
+    "ext_description": {
+        "message": "Utilise le lecteur de vidéo HTML5 par défaut sur Youtube\u2122"
+    },
+    "toggle_unchecked": {
+        "message": "Activer le lecteur HTML5"
+    },
+    "toggle_checked": {
+        "message": "Désactiver le lecteur HTML5"
+    },
+    "toggle_disabled": {
+        "message": "Lecture en HTML5 bloquée"
+    },
+    "source": {
+        "message": "Changer la source"
+    },
+    "reload": {
+        "message": "Recharger"
+    },
+    "download": {
+        "message": "Télécharger"
+    },
+    "speed_unchecked": {
+        "message": "Modifier la vitesse"
+    },
+    "speed_checked": {
+        "message": "Remettre la vitesse"
+    },
+    "rate": {
+        "message": "Vitesse"
+    },
+    "size_unchecked": {
+        "message": "Grand lecteur",
+        "description": "Aggrandit le lecteur"
+    },
+    "size_checked": {
+        "message": "Petit lecteur",
+        "description": "Réduit le lecteur"
+    },
+    "option_enabled": {
+        "message": "Utiliser automatiquement les vidéos HTML5"
+    },
+    "option_autoplay": {
+        "message": "Désactiver la lecture automatique"
+    },
+    "option_visibility": {
+        "message": "Désactiver la lecture automatique pour les onglets en fond"
+    },
+    "option_embiggen": {
+        "message": "Utiliser le grand lecteur"
+    },
+    "option_audio": {
+        "message": "Conserver les paramètres audio"
+    },
+    "option_space": {
+        "message": "Lecture/Pause avec [Maj] + [Espace]"
+    },
+    "option_codec": {
+        "message": "Codec préféré"
+    },
+    "option_rate": {
+        "message": "Vitesse par défaut"
+    },
+    "option_feedback": {
+        "message": "Questions, bugs et suggestion de fonctionnalités"
+    },
+    "option_source": {
+        "message": "Voir le code source sur GitHub"
+    }
+}
