@@ -33,12 +33,10 @@
         "message": "Vitesse"
     },
     "size_unchecked": {
-        "message": "Grand lecteur",
-        "description": "Aggrandit le lecteur"
+        "message": "Grand lecteur"
     },
     "size_checked": {
-        "message": "Petit lecteur",
-        "description": "Réduit le lecteur"
+        "message": "Petit lecteur"
     },
     "option_enabled": {
         "message": "Utiliser automatiquement les vidéos HTML5"
