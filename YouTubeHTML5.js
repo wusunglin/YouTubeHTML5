@@ -550,9 +550,11 @@ function init(streamMap) {
                 Array.prototype.some.call(UI_RATE_SELECT.options, function (o) {
                     if (o.value === options.rate) {
                         o.selected = true;
-                        STATE_VIDEO_RATE = parseFloat(o.value) || 1;
-                        HTML5_VIDEO.playbackRate = STATE_VIDEO_RATE;
-                        UI_SPEED_CHECKBOX.checked = true;
+                        if (options.rate !== "1") {
+                            STATE_VIDEO_RATE = parseFloat(o.value) || 1;
+                            HTML5_VIDEO.playbackRate = STATE_VIDEO_RATE;
+                            UI_SPEED_CHECKBOX.checked = true;
+                        }
                         return true;
                     }
                 });
