@@ -359,7 +359,7 @@ UI_DOWNLOAD_LINK.addEventListener("click", function () {
             break;
         }
     }
-    this.download =  t + x || "YouTube video";
+    this.download =  (t || "YouTube video") + x;
     this.href = HTML5_VIDEO.src;
 });
 
