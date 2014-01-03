@@ -332,6 +332,7 @@ UI_RELOAD_BUTTON.addEventListener("click", function () {
 
 UI_DOWNLOAD_LINK.addEventListener("click", function () {
     var x = "",
+        t = document.title.replace(/^\u25B6\s/, "").replace(/^YouTube\s-\s/, ""),
         i = UI_SOURCE_SELECT.options[UI_SOURCE_SELECT.selectedIndex].dataset.itag;
     if (i) {
         switch (i) {
@@ -358,7 +359,7 @@ UI_DOWNLOAD_LINK.addEventListener("click", function () {
             break;
         }
     }
-    this.download = document.title.replace(/^\u25B6\s/, "").replace(/\s-\sYouTube$/, "") + x;
+    this.download =  t + x || "YouTube video";
     this.href = HTML5_VIDEO.src;
 });
 
@@ -550,9 +551,11 @@ function init(streamMap) {
                 Array.prototype.some.call(UI_RATE_SELECT.options, function (o) {
                     if (o.value === options.rate) {
                         o.selected = true;
-                        STATE_VIDEO_RATE = parseFloat(o.value) || 1;
-                        HTML5_VIDEO.playbackRate = STATE_VIDEO_RATE;
-                        UI_SPEED_CHECKBOX.checked = true;
+                        if (options.rate !== "1") {
+                            STATE_VIDEO_RATE = parseFloat(o.value) || 1;
+                            HTML5_VIDEO.playbackRate = STATE_VIDEO_RATE;
+                            UI_SPEED_CHECKBOX.checked = true;
+                        }
                         return true;
                     }
                 });
