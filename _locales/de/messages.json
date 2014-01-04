@@ -1,94 +1,71 @@
 {
     "ext_name": {
-        "message": "HTML5 Video für YouTube\u2122",
-        "description": "HTML5 video for YouTube\u2122"
+        "message": "HTML5 Video für YouTube\u2122"
     },
     "ext_description": {
-        "message": "Verwende den Standard HTML5-Player auf YouTube\u2122",
-        "description": "Use the default HTML5 video player on YouTube\u2122"
+        "message": "Verwende den Standard HTML5-Player auf YouTube\u2122"
     },
     "toggle_unchecked": {
-        "message": "HTML5 Video aktivieren",
-        "description": "Enable HTML5 video"
+        "message": "HTML5 Video aktivieren"
     },
     "toggle_checked": {
-        "message": "HTML5 Video deaktivieren",
-        "description": "Disable HTML5 video"
+        "message": "HTML5 Video deaktivieren"
     },
     "toggle_disabled": {
-        "message": "HTML5 Video deaktiviert",
-        "description": "HTML5 video disabled"
+        "message": "HTML5 Video deaktiviert"
     },
     "source": {
-        "message": "Videoquelle ändern",
-        "description": "Change video source"
+        "message": "Videoquelle ändern"
     },
     "reload": {
-        "message": "Neu laden",
-        "description": "Reload"
+        "message": "Neu laden"
     },
     "download": {
-        "message": "Download",
-        "description": "Download"
+        "message": "Download"
     },
     "speed_unchecked": {
-        "message": "Geschwindigkeit ändern",
-        "description": "Change playback rate"
+        "message": "Geschwindigkeit ändern"
     },
     "speed_checked": {
-        "message": "Geschwindigkeit zurücksetzen",
-        "description": "Reset playback rate"
+        "message": "Geschwindigkeit zurücksetzen"
     },
     "rate": {
-        "message": "Geschwindigkeit",
-        "description": "Playback rate"
+        "message": "Geschwindigkeit"
     },
     "size_unchecked": {
-        "message": "Player vergrößern",
-        "description": "Increase player size"
+        "message": "Player vergrößern"
     },
     "size_checked": {
-        "message": "Player verkleinern",
-        "description": "Decrease player size"
+        "message": "Player verkleinern"
     },
     "option_enabled": {
-        "message": "HTML5 Video automatisch benutzen",
-        "description": "Automatically use HTML5 video"
+        "message": "HTML5 Video automatisch benutzen"
     },
     "option_autoplay": {
-        "message": "Autoplay deaktivieren",
-        "description": "Disable autoplay"
+        "message": "Autoplay deaktivieren"
     },
     "option_visibility": {
-        "message": "Autoplay für Tabs im Hintergrund deaktivieren",
-        "description": "Disable autoplay for background tabs"
+        "message": "Autoplay für Tabs im Hintergrund deaktivieren"
     },
     "option_embiggen": {
-        "message": "Benutze großen Player",
-        "description": "Use bigger video player"
+        "message": "Benutze großen Player"
     },
     "option_audio": {
-        "message": "Audio Einstellungen merken",
-        "description": "Remember audio settings"
+        "message": "Audio Einstellungen merken"
     },
     "option_space": {
-        "message": "Play/Pause mit [Umschalt] + [Leertaste]",
-        "description": "Play/Pause using [SHIFT] + [SPACE]"
+        "message": "Play/Pause mit [Umschalt] + [Leertaste]"
     },
     "option_codec": {
-        "message": "Bevorzugter Codec",
-        "description": "Preferred codec"
+        "message": "Bevorzugter Codec"
     },
     "option_rate": {
-        "message": "Standard Geschwindigkeit",
-        "description": "Default playback rate"
+        "message": "Standard Geschwindigkeit"
     },
     "option_feedback": {
-        "message": "Fragen, Bugs und Vorschläge für neue Funktionen",
-        "description": "Questions, bugs and feature suggestions"
+        "message": "Fragen, Bugs und Vorschläge für neue Funktionen"
     },
     "option_source": {
-        "message": "Downloade dir den Quellcode auf GitHub",
-        "description": "Get the source code on GitHub"
+        "message": "Downloade dir den Quellcode auf GitHub"
     }
 }
