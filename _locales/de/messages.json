@@ -8,19 +8,19 @@
         "description": "Use the default HTML5 video player on YouTube\u2122"
     },
     "toggle_unchecked": {
-        "message": "Aktivieren",
+        "message": "HTML5 Video aktivieren",
         "description": "Enable HTML5 video"
     },
     "toggle_checked": {
-        "message": "Deaktivieren",
+        "message": "HTML5 Video deaktivieren",
         "description": "Disable HTML5 video"
     },
     "toggle_disabled": {
-        "message": "",
+        "message": "HTML5 Video deaktiviert",
         "description": "HTML5 video disabled"
     },
     "source": {
-        "message": "",
+        "message": "Videoquelle ändern",
         "description": "Change video source"
     },
     "reload": {
@@ -32,23 +32,23 @@
         "description": "Download"
     },
     "speed_unchecked": {
-        "message": "",
+        "message": "Geschwindigkeit ändern",
         "description": "Change playback rate"
     },
     "speed_checked": {
-        "message": "",
+        "message": "Geschwindigkeit zurücksetzen",
         "description": "Reset playback rate"
     },
     "rate": {
-        "message": "",
+        "message": "Geschwindigkeit",
         "description": "Playback rate"
     },
     "size_unchecked": {
-        "message": "Vergrößern",
+        "message": "Player vergrößern",
         "description": "Increase player size"
     },
     "size_checked": {
-        "message": "Verkleinern",
+        "message": "Player verkleinern",
         "description": "Decrease player size"
     },
     "option_enabled": {
@@ -56,23 +56,23 @@
         "description": "Automatically use HTML5 video"
     },
     "option_autoplay": {
-        "message": "",
+        "message": "Autoplay deaktivieren",
         "description": "Disable autoplay"
     },
     "option_visibility": {
-        "message": "",
+        "message": "Autoplay für Tabs im Hintergrund deaktivieren",
         "description": "Disable autoplay for background tabs"
     },
     "option_embiggen": {
-        "message": "Großer Player",
+        "message": "Benutze großen Player",
         "description": "Use bigger video player"
     },
     "option_audio": {
-        "message": "",
+        "message": "Audio Einstellungen merken",
         "description": "Remember audio settings"
     },
     "option_space": {
-        "message": "Play/Pause mit Umschalt + Leertaste",
+        "message": "Play/Pause mit [Umschalt] + [Leertaste]",
         "description": "Play/Pause using [SHIFT] + [SPACE]"
     },
     "option_codec": {
@@ -80,7 +80,7 @@
         "description": "Preferred codec"
     },
     "option_rate": {
-        "message": "",
+        "message": "Standard Geschwindigkeit",
         "description": "Default playback rate"
     },
     "option_feedback": {
