@@ -5,11 +5,11 @@
     "ext_description": {
         "message": "Usar automáticamente HTML5 vídeo\u2122"
     },
-    "toggle_checked": {
-        "message": "Desactivar reprodutor HTML5"
-    },
     "toggle_unchecked": {
         "message": "Habilitar reproductor HTML5"
+    },
+    "toggle_checked": {
+        "message": "Desactivar reprodutor HTML5"
     },
     "toggle_disabled": {
         "message": "HTML5 video disabled"
@@ -32,11 +32,11 @@
     "rate": {
         "message": "Velocidad de reproducción"
     },
-    "size_checked": {
-        "message": "Reproductor pequeño"
-    },
     "size_unchecked": {
         "message": "Reproductor grande"
+    },
+    "size_checked": {
+        "message": "Reproductor pequeño"
     },
     "option_enabled": {
         "message": "Automaticamente usar HTML5 vídeo"

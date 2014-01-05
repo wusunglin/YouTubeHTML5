@@ -1,71 +1,71 @@
-﻿{
-   "download": {
-      "message": "Pobierz"
-   },
-   "ext_description": {
-      "message": "Używaj odtwarzacza HTML5 jako domyślnym na Youtube\u2122"
-   },
-   "ext_name": {
-      "message": "Odtwarzacz HTML5 dla Youtube\u2122"
-   },
-   "option_audio": {
-      "message": "Pamiętaj ustawienia dźwięku"
-   },
-   "option_autoplay": {
-      "message": "Wyłącz auto-odtwarzanie"
-   },
-   "option_codec": {
-      "message": "Preferowany kodek"
-   },
-   "option_embiggen": {
-      "message": "Używaj powiększonego odtwarzacza filmów"
-   },
-   "option_enabled": {
-      "message": "Automatycznie używaj odtwarzacza HTML5"
-   },
-   "option_feedback": {
-      "message": "Pytania, bugi i sugestie nowości"
-   },
-   "option_rate": {
-      "message": "Domyślna szybkość odtwarzania"
-   },
-   "option_source": {
-      "message": "Pobierz kod źródłowy w serwisie GitHub"
-   },
-   "option_space": {
-      "message": "Odtwarzaj/Pauza używając [SHIFT] + [SPACJA]"
-   },
-   "option_visibility": {
-      "message": "Wyłącz auto-odtwarzanie dla kart w tle"
-   },
-   "rate": {
-      "message": "Szybkość odtwarzania"
-   },
-   "reload": {
-      "message": "Przeładuj"
-   },
-   "size_checked": {
-      "message": "Zmniejsz wielkość odtwarzacza"
-   },
-   "size_unchecked": {
-      "message": "Zwiększ wielkość odtwarzacza"
-   },
-   "source": {
-      "message": "Zmień źródło filmu"
-   },
-   "speed_checked": {
-      "message": "Zrestartuj szybkość odtwarzania"
-   },
-   "speed_unchecked": {
-      "message": "Zmień szybkość odtwarzania"
-   },
-   "toggle_checked": {
-      "message": "Wyłącz odtwarzacz HTML5"
-   },
-   "toggle_disabled": {
-      "message": "Filmy HTML5 wyłączone"
-   },
-   "toggle_unchecked": {
-      "message": "Włącz odtwarzacz HTML5"
-   }
+{
+    "ext_name": {
+        "message": "Odtwarzacz HTML5 dla Youtube\u2122"
+    },
+    "ext_description": {
+        "message": "Używaj odtwarzacza HTML5 jako domyślnym na Youtube\u2122"
+    },
+    "toggle_unchecked": {
+        "message": "Włącz odtwarzacz HTML5"
+    },
+    "toggle_checked": {
+        "message": "Wyłącz odtwarzacz HTML5"
+    },
+    "toggle_disabled": {
+        "message": "Filmy HTML5 wyłączone"
+    },
+    "source": {
+        "message": "Zmień źródło filmu"
+    },
+    "reload": {
+        "message": "Przeładuj"
+    },
+    "download": {
+        "message": "Pobierz"
+    },
+    "speed_unchecked": {
+        "message": "Zmień szybkość odtwarzania"
+    },
+    "speed_checked": {
+        "message": "Zrestartuj szybkość odtwarzania"
+    },
+    "rate": {
+        "message": "Szybkość odtwarzania"
+    },
+    "size_unchecked": {
+        "message": "Zwiększ wielkość odtwarzacza"
+    },
+    "size_checked": {
+        "message": "Zmniejsz wielkość odtwarzacza"
+    },
+    "option_enabled": {
+        "message": "Automatycznie używaj odtwarzacza HTML5"
+    },
+    "option_autoplay": {
+        "message": "Wyłącz auto-odtwarzanie"
+    },
+    "option_visibility": {
+        "message": "Wyłącz auto-odtwarzanie dla kart w tle"
+    },
+    "option_embiggen": {
+        "message": "Używaj powiększonego odtwarzacza filmów"
+    },
+    "option_audio": {
+        "message": "Pamiętaj ustawienia dźwięku"
+    },
+    "option_space": {
+        "message": "Odtwarzaj/Pauza używając [SHIFT] + [SPACJA]"
+    },
+    "option_codec": {
+        "message": "Preferowany kodek"
+    },
+    "option_rate": {
+        "message": "Domyślna szybkość odtwarzania"
+    },
+    "option_feedback": {
+        "message": "Pytania, bugi i sugestie nowości"
+    },
+    "option_source": {
+        "message": "Pobierz kod źródłowy w serwisie GitHub"
+    }
 }
