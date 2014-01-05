@@ -1,0 +1,71 @@
+{
+    "ext_name": {
+        "message": "HTML5 Video für YouTube\u2122"
+    },
+    "ext_description": {
+        "message": "Verwende den Standard HTML5-Player auf YouTube\u2122"
+    },
+    "toggle_unchecked": {
+        "message": "HTML5 Video aktivieren"
+    },
+    "toggle_checked": {
+        "message": "HTML5 Video deaktivieren"
+    },
+    "toggle_disabled": {
+        "message": "HTML5 Video deaktiviert"
+    },
+    "source": {
+        "message": "Videoquelle ändern"
+    },
+    "reload": {
+        "message": "Neu laden"
+    },
+    "download": {
+        "message": "Download"
+    },
+    "speed_unchecked": {
+        "message": "Geschwindigkeit ändern"
+    },
+    "speed_checked": {
+        "message": "Geschwindigkeit zurücksetzen"
+    },
+    "rate": {
+        "message": "Geschwindigkeit"
+    },
+    "size_unchecked": {
+        "message": "Player vergrößern"
+    },
+    "size_checked": {
+        "message": "Player verkleinern"
+    },
+    "option_enabled": {
+        "message": "HTML5 Video automatisch benutzen"
+    },
+    "option_autoplay": {
+        "message": "Autoplay deaktivieren"
+    },
+    "option_visibility": {
+        "message": "Autoplay für Tabs im Hintergrund deaktivieren"
+    },
+    "option_embiggen": {
+        "message": "Benutze großen Player"
+    },
+    "option_audio": {
+        "message": "Audio Einstellungen merken"
+    },
+    "option_space": {
+        "message": "Play/Pause mit [Umschalt] + [Leertaste]"
+    },
+    "option_codec": {
+        "message": "Bevorzugter Codec"
+    },
+    "option_rate": {
+        "message": "Standard Geschwindigkeit"
+    },
+    "option_feedback": {
+        "message": "Fragen, Bugs und Vorschläge für neue Funktionen"
+    },
+    "option_source": {
+        "message": "Downloade dir den Quellcode auf GitHub"
+    }
+}
