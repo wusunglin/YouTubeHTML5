@@ -593,7 +593,7 @@ function parseStreamMap(streamMapHTML) {
         try {
             str = decodeURIComponent(stream);
             tag = str.match(/itag=(\d{0,3})/)[1];
-            url = str.match(/url=(.*?)(\\u0026|$)/)[1].replace(/^http:\/\//i, "https://");
+            url = str.match(/url=(.*?)(\\u0026|$)/)[1].replace(/^https?:\/\//, "//");
             sig = str.match(/[sig|s]=([A-Z0-9]*\.[A-Z0-9]*(?:\.[A-Z0-9]*)?)/)[1];
         } catch (e) {
             return;
