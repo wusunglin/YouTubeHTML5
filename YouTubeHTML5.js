@@ -148,29 +148,12 @@ HTML5_VIDEO.addEventListener("ended", function () {
     }
 });
 
-/*
 HTML5_VIDEO.addEventListener("error", function (e) {
-    // this.load();
-    // http://www.whatwg.org/specs/web-apps/current-work/#the-video-element
-    switch (e.target.error.code) {
-    case e.target.error.MEDIA_ERR_ABORTED:
-        console.log('You aborted the video playback.');
-        break;
-    case e.target.error.MEDIA_ERR_NETWORK:
-        console.log('A network error caused the video download to fail part-way.');
-        break;
-    case e.target.error.MEDIA_ERR_DECODE:
-        console.log('The video playback was aborted due to a corruption problem or because the video used features your browser did not support.');
-        break;
-    case e.target.error.MEDIA_ERR_SRC_NOT_SUPPORTED:
-        console.log('The video could not be loaded, either because the server or network failed or because the format is not supported.');
-        break;
-    default:
-        console.log('An unknown error occurred.');
-        break;
+    // this seems to happen if the video is paused for a while
+    if (e.target.error.code === e.target.error.MEDIA_ERR_NETWORK) {
+        this.load();
     }
 });
-*/
 
 // option.space: document.addEventListener "keydown"
 function videoKeyboardControls(e) {
